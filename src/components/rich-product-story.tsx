@@ -15,6 +15,13 @@ type StoryPage = {
   imagePosition?: string;
   dark?: boolean;
   specs?: {label: Copy; value: Copy}[];
+  related?: boolean;
+};
+
+type RelatedTool = {
+  name: Copy;
+  image: string;
+  href: string;
 };
 
 const copy = (ja: string, en: string): Copy => ({ja, en});
@@ -31,102 +38,52 @@ const pages: StoryPage[] = [
     imageAlt: copy("amane 三徳包丁", "amane Santoku knife")
   },
   {
-    kicker: copy("OVERVIEW 01", "OVERVIEW 01"),
-    title: copy("肉も、魚も、野菜も。", "One knife for meat, fish, and vegetables."),
+    kicker: copy("OVERVIEW", "OVERVIEW"),
+    title: copy("肉も、魚も、野菜も。芯にはVG10。", "One knife for meat, fish, and vegetables."),
     body: copy(
-      "三徳は、菜切包丁のまっすぐな刃と、牛刀の汎用性をあわせ持つ、日本で広く使われる万能包丁です。175mmの刃渡りは、家庭のまな板で扱いやすく、日々のほとんどの食材に応えます。",
-      "Santoku is Japan's widely used all-purpose knife. Its long, straight edge brings together the character of a Nakiri and the versatility of a chef's knife, making the 175 mm blade a natural fit for everyday preparation."
+      "三徳は、菜切包丁のまっすぐな刃と牛刀の汎用性をあわせ持つ、日本の万能包丁です。175mmの扱いやすい刃に、硬さと刃持ちに優れるVG10ステンレス鋼を採用。毎日のほとんどの食材に、一本で応えます。",
+      "Santoku combines the straight edge of a Nakiri with the versatility of a chef's knife. Its approachable 175 mm blade is made from hard, edge-retaining VG10 stainless steel—one knife for most everyday preparation."
     ),
     image: "/images/kamaasa/amane/point-01.jpg",
     imageAlt: copy("amaneで食材を切る様子", "Cutting with the amane knife")
   },
   {
-    kicker: copy("OVERVIEW 02", "OVERVIEW 02"),
-    title: copy("芯に選んだのは、VG10。", "Made from VG10 steel."),
-    body: copy(
-      "刃持ちと硬さに優れるVG10ステンレス鋼を採用。毎日の手入れのしやすさと、鋭い切れ味を長く保つこと。その両立を目指した素材です。",
-      "VG10 stainless steel is known for excellent hardness and edge durability. It gives amane a lasting sharpness while remaining practical for an everyday kitchen."
-    ),
-    image: "/images/kamaasa/amane/point-03.jpg",
-    imageAlt: copy("amaneの刃先", "Close view of the amane blade")
-  },
-  {
     kicker: copy("POINT 01", "POINT 01"),
-    title: copy("プロの道具に使われる、硬質ステンレス。", "Professional-grade stainless steel."),
+    title: copy("鋼を活かし、食材へすっと入る。", "Hard steel, shaped for a smooth cut."),
     body: copy(
-      "硬い鋼を活かすため、焼き入れ後の歪みを丁寧に取り、砥石で厚みを整えます。プレス成形の一枚物でありながら、手仕事の工程を重ねて仕上げています。",
-      "To make the most of hard VG10 steel, distortion is carefully removed after tempering and the blade thickness is refined on whetstones. Handwork remains essential throughout the finishing process."
+      "硬いVG10鋼を活かすため、焼き入れ後の歪みを丁寧に取り、砥石で厚みを整えます。峰から刃先へなだらかに薄くなる凸刃が切り込みの抵抗を抑え、切れ離れと刃持ちを両立します。",
+      "After tempering, the hard VG10 steel is carefully straightened and refined on whetstones. A convex profile thins gradually from spine to edge, reducing resistance while balancing food release and lasting sharpness."
     ),
-    image: "/images/kamaasa/amane/point-01.jpg",
-    imageAlt: copy("amaneの切れ味", "The amane knife in use")
+    image: "/images/kamaasa/amane/point-04.jpg",
+    imageAlt: copy("滑らかに食材へ入るamaneの刃", "The amane blade cutting smoothly")
   },
   {
     kicker: copy("POINT 02", "POINT 02"),
-    title: copy("食材へ、すっと入る凸刃。", "A convex edge for a smooth cut."),
+    title: copy("研ぎ、握り、口金。手になじむ設計。", "An edge, handle and bolster made for the hand."),
     body: copy(
-      "峰から刃先へなだらかに薄くなる凸形状。切り込むときの抵抗を抑え、切れ離れと刃持ちのバランスを考えた設計です。",
-      "A smooth curve runs from the spine toward the thin edge. The convex geometry reduces resistance as it cuts while balancing edge durability and food release."
-    ),
-    image: "/images/kamaasa/amane/point-04.jpg",
-    imageAlt: copy("肉を切るamane", "amane slicing meat")
-  },
-  {
-    kicker: copy("POINT 03", "POINT 03"),
-    title: copy("研ぎ方を、使い手の手へ。", "One-piece steel that adapts to your hand."),
-    body: copy(
-      "表裏7対3の刃付けで、右利きの方が扱いやすい設計です。一枚鋼は研ぎによって刃の形を調整でき、長く使うほど自分の道具へ育てられます。",
-      "The edge is finished at a 7:3 front-to-back ratio for right-handed use. Its single-layer construction also lets the owner adjust the edge through sharpening over years of use."
-    ),
-    image: "/images/kamaasa/amane/point-03.jpg",
-    imageAlt: copy("一枚鋼の刃", "Single-layer steel blade")
-  },
-  {
-    kicker: copy("POINT 04", "POINT 04"),
-    title: copy("握ってわかる、丸み。", "A handle shaped for a comfortable grip."),
-    body: copy(
-      "金属と積層強化木の境目まで何度も磨き、隙間のない艶やかな丸みへ。小さな手でも握りやすく、長い仕込みでも負担を抑える形です。",
-      "The metal and composite-wood handle are polished repeatedly into a seamless, rounded form. It is comfortable over long preparation sessions and particularly approachable for smaller hands."
+      "表裏7対3の刃付けは右利きの手に扱いやすく、一枚鋼は研ぎながら自分の刃へ育てられます。積層強化木の柄は境目まで何度も磨き、丸く滑らかな握りへ。ステンレスの口金が水や汚れの侵入を抑えます。",
+      "A 7:3 edge suits right-handed use, while single-layer steel can be reshaped through years of sharpening. The composite-wood handle is polished into a seamless rounded grip, and a stainless bolster helps keep out water and dirt."
     ),
     image: "/images/kamaasa/amane/point-02.jpg",
     imageAlt: copy("磨かれたハンドル", "The polished amane handle")
   },
   {
-    kicker: copy("POINT 05", "POINT 05"),
-    title: copy("水を入れない、ステンレスの口金。", "A hygienic, durable stainless-steel bolster."),
+    kicker: copy("POINT 03", "POINT 03"),
+    title: copy("釜浅商店の印と、関の手仕事。", "The KAMA-ASA mark, made in Seki."),
     body: copy(
-      "刃とハンドルの間にある口金が、水の侵入や汚れの付着を抑えます。錆びにくいステンレス製で、衛生面と耐久性を支える小さな要所です。",
-      "The stainless-steel bolster between blade and handle helps keep water and dirt from entering the handle. It is a small detail that supports both hygiene and durability."
-    ),
-    image: "/images/kamaasa/amane/point-05.jpg",
-    imageAlt: copy("ステンレスの口金", "Stainless-steel bolster")
-  },
-  {
-    kicker: copy("POINT 06", "POINT 06"),
-    title: copy("釜浅商店の印。", "The KAMA-ASA mark."),
-    body: copy(
-      "刃の裏に刻まれた釜浅商店のマークは、ここでしか手に入らないオリジナルであること、そして道具への責任を示す印です。",
-      "The mark engraved on the reverse of the blade identifies an original available only from KAMA-ASA—and the responsibility the shop takes for the tool."
-    ),
-    image: "/images/kamaasa/amane/point-06.jpg",
-    imageAlt: copy("刃に刻まれた釜浅商店のマーク", "KAMA-ASA mark on the blade")
-  },
-  {
-    kicker: copy("POINT 07", "POINT 07"),
-    title: copy("岐阜・関の藤竹とつくる。", "Made with Fujitake in Seki, Gifu."),
-    body: copy(
-      "日本有数の刃物産地、岐阜県関市。研削、歪み取り、仕上げ、柄付けまで多くの工程を自社で行う藤竹と共同開発しました。料理人から信頼される技術が、一本を支えています。",
-      "amane was developed with Fujitake in Seki, one of Japan's leading blade-making regions. The maker performs much of the grinding, straightening, finishing and handle fitting in-house."
+      "刃の裏に刻まれた釜浅商店のマークは、ここだけのオリジナルである証です。一本を支えるのは、日本有数の刃物産地・岐阜県関市の藤竹。研削、歪み取り、仕上げ、柄付けまで、多くの工程を自社で担う作り手と共同開発しました。",
+      "The mark on the reverse identifies an original available only from KAMA-ASA. amane was developed with Fujitake in Seki, Gifu, where the maker performs much of the grinding, straightening, finishing and handle fitting in-house."
     ),
     image: "/images/kamaasa/amane/point-07.jpg",
     imageAlt: copy("関市での包丁づくり", "Knife making in Seki"),
     dark: true
   },
   {
-    kicker: copy("SPECIFICATION", "SPECIFICATION"),
-    title: copy("一本の輪郭。", "The essentials."),
+    kicker: copy("SPECIFICATION / CARE", "SPECIFICATION / CARE"),
+    title: copy("一本を、長く使う。", "Made to remain in your hand."),
     body: copy(
-      "毎日の万能包丁として取り回しやすい寸法と、研ぎ直しながら長く使うための構成です。",
-      "Proportioned for everyday versatility and built to be maintained through years of sharpening."
+      "食器洗浄機は使わず、洗ったあとは水分をよく拭き取ってください。研ぎ直しながら長く使え、釜浅商店では名入れにも対応しています。",
+      "Do not place the knife in a dishwasher. Wash and dry it thoroughly after use. Regular sharpening keeps it working for years, and KAMA-ASA also offers name engraving."
     ),
     specs: [
       {label: copy("全長", "Total length"), value: copy("300mm", "300 mm")},
@@ -139,14 +96,31 @@ const pages: StoryPage[] = [
     ]
   },
   {
-    kicker: copy("CARE & ENGRAVING", "CARE & ENGRAVING"),
-    title: copy("使ったあとに、次の切れ味をつくる。", "Care today for tomorrow's edge."),
+    kicker: copy("DISCOVER MORE", "DISCOVER MORE"),
+    title: copy("次の一本を、見つける。", "Find your next knife."),
     body: copy(
-      "食器洗浄機は使わず、使用後は洗って水分をよく拭き取ってください。研ぎ直しながら使うことで、一本は長く手に残ります。釜浅商店では名入れにも対応しています。",
-      "Do not place the knife in a dishwasher. Wash it after use and wipe it thoroughly dry. Regular sharpening lets it remain a trusted tool for years. KAMA-ASA also offers name engraving."
+      "同じAMANEシリーズから、用途に合わせた三本をご紹介します。日々の万能包丁から、肉や魚のための専門的な一本へ。",
+      "Explore three more knives from the AMANE series, each shaped for a different task—from everyday preparation to precise work with meat and fish."
     ),
-    image: "/images/kamaasa/amane/amane-santoku.jpg",
-    imageAlt: copy("手入れをしながら長く使うamane", "An amane knife made to be maintained")
+    related: true
+  }
+];
+
+const relatedTools: RelatedTool[] = [
+  {
+    name: copy("amane 牛刀", "amane Chef knife"),
+    image: "/images/kamaasa/related/amane-chef-knife.jpg",
+    href: "https://kama-asa.co.jp/en-us/products/amane-gyuto?country=US"
+  },
+  {
+    name: copy("amane 筋引", "amane Sujihiki"),
+    image: "/images/kamaasa/related/amane-sujihiki.png",
+    href: "https://kama-asa.co.jp/en-us/products/amane-sujihiki?country=US"
+  },
+  {
+    name: copy("amane 骨スキ", "amane Honesuki"),
+    image: "/images/kamaasa/related/amane-honesuki.png",
+    href: "https://kama-asa.co.jp/en-us/products/amane-honesuki?country=US"
   }
 ];
 
@@ -180,14 +154,14 @@ export function RichProductStory({locale}: {locale: string}) {
       <div ref={railRef} className="hide-scrollbar h-full snap-y snap-mandatory overflow-y-auto overscroll-y-contain">
         {pages.map((page, index) => {
           const first = index === 0;
-          const last = index === pages.length - 1;
           return (
             <section
               key={`${page.kicker.en}-${index}`}
               ref={(element) => {pageRefs.current[index] = element;}}
               data-page={index + 1}
+              data-active={current === index + 1 ? "true" : "false"}
               aria-label={`Story page ${index + 1} of ${pages.length}`}
-              className={`relative flex h-full snap-start snap-always flex-col overflow-hidden ${page.dark ? "bg-[#171717] text-white" : "bg-[#f7f7f5]"}`}
+              className={`story-page relative flex h-full snap-start snap-always flex-col overflow-hidden ${page.dark ? "bg-[#171717] text-white" : "bg-[#f7f7f5]"}`}
             >
               {page.image && (
                 <div className={`relative ${first ? "order-2 h-[58%]" : "h-[43%]"} shrink-0 overflow-hidden bg-white`}>
@@ -205,19 +179,19 @@ export function RichProductStory({locale}: {locale: string}) {
               )}
 
               <div className={`relative z-10 flex flex-1 flex-col px-7 ${first ? "order-1 justify-end pb-7 pt-14" : "justify-center py-9"}`}>
-                <p className={`mb-5 text-[11px] font-semibold tracking-[0.24em] ${page.dark ? "text-[#c6a66a]" : "text-[#8b6b31]"}`}>
+                <p className={`story-reveal story-reveal-1 mb-5 text-[11px] font-semibold tracking-[0.24em] ${page.dark ? "text-[#c6a66a]" : "text-[#8b6b31]"}`}>
                   {page.kicker[language]}
                 </p>
-                <h1 className={`${first ? "text-[38px]" : "text-[29px]"} max-w-[95%] font-medium leading-[1.12] tracking-[-0.03em]`}>
+                <h1 className={`story-reveal story-reveal-2 ${first ? "text-[38px]" : "text-[29px]"} max-w-[95%] font-medium leading-[1.12] tracking-[-0.03em]`}>
                   {page.title[language]}
                 </h1>
-                <div className={`my-6 h-px w-12 ${page.dark ? "bg-white/45" : "bg-black/35"}`} />
-                <p className={`max-w-[34em] text-[14px] leading-[1.9] ${page.dark ? "text-white/78" : "text-[#4a4a4a]"}`}>
+                <div className={`story-reveal story-reveal-3 my-6 h-px w-12 ${page.dark ? "bg-white/45" : "bg-black/35"}`} />
+                <p className={`story-reveal story-reveal-4 max-w-[34em] text-[14px] leading-[1.9] ${page.dark ? "text-white/78" : "text-[#4a4a4a]"}`}>
                   {page.body[language]}
                 </p>
 
                 {page.specs && (
-                  <dl className="mt-7 border-t border-black/25 text-[12px]">
+                  <dl className="story-reveal story-reveal-5 mt-7 border-t border-black/25 text-[12px]">
                     {page.specs.map((item) => (
                       <div key={item.label.en} className="grid grid-cols-[42%_1fr] border-b border-black/15 py-2.5">
                         <dt className="text-black/55">{item.label[language]}</dt>
@@ -227,10 +201,52 @@ export function RichProductStory({locale}: {locale: string}) {
                   </dl>
                 )}
 
-                {last && (
-                  <Link href="/" locale={locale} className="mt-7 inline-flex w-fit items-center border-b border-black pb-1 text-[12px] font-semibold tracking-[0.16em]">
-                    {language === "ja" ? "店内マップへ戻る" : "BACK TO STORE MAP"}
-                  </Link>
+                {page.related && (
+                  <div className="story-reveal story-reveal-5 mt-8">
+                    <div className="mb-4 flex items-center justify-between">
+                      <p className="text-[9px] font-semibold tracking-[0.2em] text-black/55">
+                        {language === "ja" ? "関連商品" : "RELATED PRODUCTS"}
+                      </p>
+                    </div>
+                    <div className="grid grid-cols-3 gap-2">
+                      {relatedTools.map((tool, toolIndex) => (
+                        <a
+                          key={tool.name.en}
+                          href={tool.href}
+                          target="_self"
+                          hrefLang="en-US"
+                          aria-label={`${tool.name[language]} — ${language === "ja" ? "英語のECサイトで見る" : "view on the English online store"}`}
+                          className="group overflow-hidden border border-black/15 bg-white/75 text-left transition-colors active:bg-black/10"
+                        >
+                          <div className="relative h-24 bg-white/80">
+                            <Image
+                              src={tool.image}
+                              alt=""
+                              fill
+                              sizes="104px"
+                              className="object-contain p-3 transition-transform duration-300 group-hover:scale-105"
+                            />
+                          </div>
+                          <div className="grid min-h-[44px] grid-cols-[22px_1fr] border-t border-black/10">
+                            <span className="flex items-center justify-center border-r border-black/10 text-[7px] tracking-[0.08em] text-[#8b6b31]">
+                              {pad2(toolIndex + 2)}
+                            </span>
+                            <span className="flex items-center px-2 py-1.5 text-[9px] font-medium leading-[1.25]">
+                              {tool.name[language]}
+                            </span>
+                          </div>
+                        </a>
+                      ))}
+                    </div>
+                    <Link
+                      href="/"
+                      locale={locale}
+                      className="mt-8 flex items-center justify-between border-y border-black/25 py-3 text-[10px] font-semibold tracking-[0.16em]"
+                    >
+                      <span>{language === "ja" ? "店内マップへ戻る" : "BACK TO STORE MAP"}</span>
+                      <span aria-hidden="true">→</span>
+                    </Link>
+                  </div>
                 )}
               </div>
 
@@ -243,6 +259,21 @@ export function RichProductStory({locale}: {locale: string}) {
           );
         })}
       </div>
+
+      <Link
+        href="/"
+        locale={locale}
+        aria-label={language === "ja" ? "店内マップへ戻る" : "Back to store map"}
+        className="mincho group absolute left-4 top-4 z-30 flex h-8 items-center gap-2 border border-black/15 bg-white/75 px-3 text-[10px] font-normal tracking-[0.18em] text-black/60 backdrop-blur-sm transition-colors hover:border-black/25 hover:bg-white/85 hover:text-black/75 active:bg-white/95 active:text-black/85"
+      >
+        <span
+          aria-hidden="true"
+          className="text-[14px] font-normal leading-none transition-transform group-active:-translate-x-0.5"
+        >
+          ←
+        </span>
+        <span>MAP</span>
+      </Link>
 
       <div className="pointer-events-none absolute right-4 top-4 z-30 bg-white/90 px-2.5 py-1.5 text-[12px] font-medium tracking-[0.1em] shadow-sm backdrop-blur-sm" aria-live="polite">
         {pad2(current)} <span className="text-black/40">/ {pad2(pages.length)}</span>
@@ -260,6 +291,7 @@ export function RichProductStory({locale}: {locale: string}) {
           />
         ))}
       </nav>
+
     </div>
   );
 }
