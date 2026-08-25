@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && opennextjs-cloudflare build --skipNextBuild && node scripts/prepare-sites-dist.mjs",
+    "build": "next build && opennextjs-cloudflare build --skipNextBuild && XDG_CONFIG_HOME=.wrangler WRANGLER_LOG_PATH=.wrangler/wrangler-build.log wrangler deploy --dry-run --outdir .worker-bundle && node scripts/prepare-sites-dist.mjs",
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",

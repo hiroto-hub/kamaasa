@@ -1,6 +1,8 @@
 node_modules
 .next
 .open-next
+.worker-bundle*
+.wrangler
 dist
 .DS_Store
 playwright-report
