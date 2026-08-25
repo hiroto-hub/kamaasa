@@ -1,0 +1,63 @@
+{
+  "Common": {
+    "brand": "Kataribe",
+    "tagline": "만드는 이의 말을, 여행의 언어로.",
+    "changeLanguage": "언어 변경",
+    "back": "뒤로",
+    "close": "닫기",
+    "imageUnavailable": "이미지를 표시할 수 없습니다",
+    "photoPending": "사진 준비 중",
+    "loading": "불러오는 중"
+  },
+  "StoreMap": {
+    "title": "매장 지도",
+    "productsLabel": "매장 지도 위의 상품",
+    "openProduct": "상품 열기",
+    "cashier": "계산대",
+    "staffRoom": "직원실",
+    "vegetableCorner": "채소\n코너",
+    "seasoningCorner": "조미료\n코너",
+    "giftCorner": "선물\n코너",
+    "stairs": "계단",
+    "entrance": "입구"
+  },
+  "Story": {
+    "epilogueTitle": "이 이야기를, 여행의 기억으로.",
+    "epilogueKicker": "むすび",
+    "epilogueBody": "여기까지 읽어 주셔서 감사합니다. 이 맛에 담긴 이야기가 여행의 추억 중 하나가 되기를. 마음에 드셨다면 누군가에게 알려 주세요.",
+    "share": "이 이야기 공유하기",
+    "online": "온라인 스토어 가기",
+    "neighborsTitle": "옆 선반의 이야기",
+    "backToMap": "매장 지도로 돌아가기",
+    "ingredientsHeading": "원재료",
+    "allergensHeading": "알레르기 물질",
+    "nutritionHeading": "영양 성분"
+  },
+  "Share": {
+    "title": "이 이야기 공유",
+    "close": "닫기",
+    "system": "기기 공유 기능 사용",
+    "mail": "메일",
+    "copyLink": "링크 복사",
+    "copied": "복사했습니다",
+    "saveTitle": "즐겨찾기에 저장",
+    "save": "즐겨찾기 추가",
+    "saved": "즐겨찾기에 추가됨"
+  },
+  "Allergen": {
+    "wheat": "밀",
+    "soy": "대두",
+    "milk": "우유",
+    "egg": "달걀",
+    "shrimp": "새우",
+    "mackerel": "고등어",
+    "none": "특정 원재료 없음"
+  },
+  "Nutrition": {
+    "energy": "에너지",
+    "protein": "단백질",
+    "fat": "지방",
+    "carbohydrate": "탄수화물",
+    "salt": "식염 상당량"
+  }
+}

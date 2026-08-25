@@ -1,0 +1,63 @@
+{
+  "Common": {
+    "brand": "Kataribe",
+    "tagline": "The maker's words, in the language of your journey.",
+    "changeLanguage": "Change language",
+    "back": "Back",
+    "close": "Close",
+    "imageUnavailable": "Image unavailable",
+    "photoPending": "Photo coming soon",
+    "loading": "Loading"
+  },
+  "StoreMap": {
+    "title": "Store map",
+    "productsLabel": "Products on the store map",
+    "openProduct": "Open product",
+    "cashier": "Cashier",
+    "staffRoom": "Staff Room",
+    "vegetableCorner": "Vegetable\nCorner",
+    "seasoningCorner": "Seasoning\nCorner",
+    "giftCorner": "Gift\nCorner",
+    "stairs": "Stairs",
+    "entrance": "Entrance"
+  },
+  "Story": {
+    "epilogueTitle": "Take the story home.",
+    "epilogueKicker": "むすび",
+    "epilogueBody": "Thank you for reading this far. May the story behind this flavor become one of your travel memories — and if you enjoyed it, tell someone about it.",
+    "share": "Share this story",
+    "online": "Visit the online store",
+    "neighborsTitle": "Stories on the next shelf",
+    "backToMap": "Back to the store map",
+    "ingredientsHeading": "Ingredients",
+    "allergensHeading": "Allergens",
+    "nutritionHeading": "Nutrition"
+  },
+  "Share": {
+    "title": "Share this story",
+    "close": "Close",
+    "system": "Use device sharing",
+    "mail": "Email",
+    "copyLink": "Copy link",
+    "copied": "Copied",
+    "saveTitle": "Save to favorites",
+    "save": "Add to favorites",
+    "saved": "Saved to favorites"
+  },
+  "Allergen": {
+    "wheat": "Wheat",
+    "soy": "Soy",
+    "milk": "Milk",
+    "egg": "Egg",
+    "shrimp": "Shrimp",
+    "mackerel": "Mackerel",
+    "none": "No major allergens"
+  },
+  "Nutrition": {
+    "energy": "Energy",
+    "protein": "Protein",
+    "fat": "Fat",
+    "carbohydrate": "Carbohydrate",
+    "salt": "Salt equivalent"
+  }
+}

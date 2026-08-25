@@ -1,0 +1,63 @@
+{
+  "Common": {
+    "brand": "かたりべ",
+    "tagline": "つくり手の言葉を、旅の言葉で。",
+    "changeLanguage": "言語を変更",
+    "back": "戻る",
+    "close": "閉じる",
+    "imageUnavailable": "画像を表示できません",
+    "photoPending": "写真調整中",
+    "loading": "読み込み中"
+  },
+  "StoreMap": {
+    "title": "店内マップ",
+    "productsLabel": "店内マップ上の商品",
+    "openProduct": "商品を開く",
+    "cashier": "レジカウンター",
+    "staffRoom": "スタッフルーム",
+    "vegetableCorner": "野菜\nコーナー",
+    "seasoningCorner": "調味料\nコーナー",
+    "giftCorner": "ギフト\nコーナー",
+    "stairs": "階段",
+    "entrance": "入口"
+  },
+  "Story": {
+    "epilogueTitle": "物語を、旅のしおりに。",
+    "epilogueKicker": "Epilogue",
+    "epilogueBody": "ここまで読んでくださって、ありがとうございます。この味の背景を、どうか旅の思い出のひとつに。気に入っていただけたら、だれかに教えてあげてください。",
+    "share": "この物語をわかちあう",
+    "online": "オンラインストアで求める",
+    "neighborsTitle": "となりの棚の、ものがたり",
+    "backToMap": "店内マップへもどる",
+    "ingredientsHeading": "原材料",
+    "allergensHeading": "アレルギー物質",
+    "nutritionHeading": "栄養成分"
+  },
+  "Share": {
+    "title": "この物語をシェア",
+    "close": "閉じる",
+    "system": "端末の共有機能を使う",
+    "mail": "メール",
+    "copyLink": "リンクをコピー",
+    "copied": "コピーしました",
+    "saveTitle": "あとで見る（お気に入り）に保存",
+    "save": "お気に入りに追加",
+    "saved": "お気に入りに追加済み"
+  },
+  "Allergen": {
+    "wheat": "小麦",
+    "soy": "大豆",
+    "milk": "乳",
+    "egg": "卵",
+    "shrimp": "えび",
+    "mackerel": "さば",
+    "none": "特定原材料の使用なし"
+  },
+  "Nutrition": {
+    "energy": "エネルギー",
+    "protein": "たんぱく質",
+    "fat": "脂質",
+    "carbohydrate": "炭水化物",
+    "salt": "食塩相当量"
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "Common": {
+    "brand": "Kataribe",
+    "tagline": "以旅途的语言，传递匠人的心意。",
+    "changeLanguage": "切换语言",
+    "back": "返回",
+    "close": "关闭",
+    "imageUnavailable": "无法显示图片",
+    "photoPending": "照片准备中",
+    "loading": "加载中"
+  },
+  "StoreMap": {
+    "title": "店内地图",
+    "productsLabel": "店内地图上的商品",
+    "openProduct": "打开商品",
+    "cashier": "收银台",
+    "staffRoom": "员工室",
+    "vegetableCorner": "蔬菜\n专区",
+    "seasoningCorner": "调味料\n专区",
+    "giftCorner": "礼品\n专区",
+    "stairs": "楼梯",
+    "entrance": "入口"
+  },
+  "Story": {
+    "epilogueTitle": "把这段故事，带回旅途。",
+    "epilogueKicker": "むすび",
+    "epilogueBody": "感谢您读到这里。愿这份味道背后的故事，成为您旅途的回忆之一。如果喜欢，请告诉身边的人。",
+    "share": "分享这段故事",
+    "online": "前往线上商店",
+    "neighborsTitle": "邻架商品的故事",
+    "backToMap": "返回店内地图",
+    "ingredientsHeading": "配料",
+    "allergensHeading": "过敏原",
+    "nutritionHeading": "营养成分"
+  },
+  "Share": {
+    "title": "分享这段故事",
+    "close": "关闭",
+    "system": "使用设备分享功能",
+    "mail": "邮件",
+    "copyLink": "复制链接",
+    "copied": "已复制",
+    "saveTitle": "保存到收藏",
+    "save": "加入收藏",
+    "saved": "已加入收藏"
+  },
+  "Allergen": {
+    "wheat": "小麦",
+    "soy": "大豆",
+    "milk": "乳",
+    "egg": "蛋",
+    "shrimp": "虾",
+    "mackerel": "鲭鱼",
+    "none": "不含特定原材料"
+  },
+  "Nutrition": {
+    "energy": "能量",
+    "protein": "蛋白质",
+    "fat": "脂肪",
+    "carbohydrate": "碳水化合物",
+    "salt": "食盐等量"
+  }
+}
