@@ -10,6 +10,8 @@ const config = [
   {
     ignores: [
       ".next/**",
+      ".open-next/**",
+      "dist/**",
       "node_modules/**",
       "playwright-report/**",
       "test-results/**",
