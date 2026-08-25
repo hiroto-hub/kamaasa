@@ -1,24 +1,12 @@
-import {notFound} from "next/navigation";
-import {
-  ProductStory,
-  type StoryDetails,
-  type StoryFrame,
-  type StoryNeighbor
-} from "@/components/product-story";
-import {RichProductStory} from "@/components/rich-product-story";
-import {getProductBySlug, products} from "@/data/content";
-import {getLocalizedText} from "@/lib/localized";
-import {routing} from "@/i18n/routing";
-import type {LocalizedText} from "@/types/content";
-import {getTranslations, setRequestLocale} from "next-intl/server";
 import type {Metadata} from "next";
 import {headers} from "next/headers";
+import {notFound} from "next/navigation";
+import {setRequestLocale} from "next-intl/server";
+import {RichProductStory} from "@/components/rich-product-story";
+import {routing} from "@/i18n/routing";
 
 export function generateStaticParams() {
-  return routing.locales.flatMap((locale) => [
-    ...products.map((product) => ({locale, slug: product.slug})),
-    {locale, slug: "amane-santoku"}
-  ]);
+  return routing.locales.map((locale) => ({locale, slug: "amane-santoku"}));
 }
 
 export async function generateMetadata({
@@ -27,47 +15,24 @@ export async function generateMetadata({
   params: Promise<{locale: string; slug: string}>;
 }): Promise<Metadata> {
   const {locale, slug} = await params;
+  if (slug !== "amane-santoku") return {};
+
   const requestHeaders = await headers();
   const host = requestHeaders.get("x-forwarded-host") ?? requestHeaders.get("host") ?? "127.0.0.1:3011";
   const protocol = requestHeaders.get("x-forwarded-proto") ?? (host.includes("127.0.0.1") ? "http" : "https");
+  const title = "amane Santoku 175mm | KAMA-ASA Story Guide";
+  const description = locale === "ja"
+    ? "釜浅商店オリジナルのamane三徳。Overview、7つの特徴、仕様、手入れまでを紹介します。"
+    : "Explore KAMA-ASA's amane Santoku: its overview, seven key features, specifications and care.";
+  const image = `${protocol}://${host}/images/kamaasa/amane/amane-santoku.jpg`;
 
-  if (slug === "amane-santoku") {
-    const title = "amane Santoku 175mm | KAMA-ASA Story Guide";
-    const description = locale === "ja"
-      ? "釜浅商店オリジナルのamane三徳。Overview、7つの特徴、仕様、手入れまでを紹介します。"
-      : "Explore KAMA-ASA's amane Santoku: its overview, seven key features, specifications and care.";
-    const image = `${protocol}://${host}/images/kamaasa/amane/amane-santoku.jpg`;
-    return {
-      title,
-      description,
-      openGraph: {title, description, images: [image]},
-      twitter: {card: "summary_large_image", title, description, images: [image]}
-    };
-  }
-
-  const product = getProductBySlug(slug);
-  if (!product) return {};
-  const name = getLocalizedText(product.name, locale);
-  const title = `${name} | KAMA-ASA Story Guide`;
-  const description = getLocalizedText(product.shortDescription, locale);
-  const image = product.image ? `${protocol}://${host}${product.image}` : undefined;
   return {
     title,
     description,
-    openGraph: {title, description, images: image ? [image] : []},
-    twitter: {card: "summary_large_image", title, description, images: image ? [image] : []}
+    openGraph: {title, description, images: [image]},
+    twitter: {card: "summary_large_image", title, description, images: [image]}
   };
 }
-
-/** マップに置いている6品。むすびの「となりの棚」もこの中から選ぶ */
-const neighborPool = [
-  "product-kayanoya-dashi",
-  "product-shiro-dashi",
-  "product-vegetable-dashi",
-  "product-niboshi-dashi",
-  "product-golden-dashi",
-  "product-reduced-salt-dashi"
-];
 
 export default async function ProductStoryPage({
   params
@@ -77,96 +42,11 @@ export default async function ProductStoryPage({
   const {locale, slug} = await params;
   setRequestLocale(locale);
 
-  if (slug === "amane-santoku") {
-    return (
-      <main className="min-h-svh bg-[#f7f7f5]">
-        <RichProductStory locale={locale} />
-      </main>
-    );
-  }
-
-  const product = getProductBySlug(slug);
-
-  if (!product) {
-    notFound();
-  }
-
-  if (locale === "en" && product.slug === "kayanoya-dashi") {
-    return (
-      <main className="min-h-svh bg-kinari">
-        <RichProductStory locale={locale} />
-      </main>
-    );
-  }
-
-  const tAllergen = await getTranslations("Allergen");
-  const tNutrition = await getTranslations("Nutrition");
-
-  /** 見出しに添える金色の別言語表記。日本語では英語を、他言語では日本語を出す */
-  const kickerOf = (textObj: LocalizedText) =>
-    locale === "ja" ? textObj.en : textObj.ja;
-
-  const frames: StoryFrame[] = [
-    {
-      id: "intro",
-      title: getLocalizedText(product.name, locale),
-      kicker: locale === "ja" ? product.romanizedName : product.name.ja,
-      lead: getLocalizedText(product.shortDescription, locale),
-      body: getLocalizedText(product.summary, locale),
-      image: product.image,
-      imageAlt: getLocalizedText(product.imageAlt, locale)
-    },
-    ...product.sections.map((section): StoryFrame => {
-      return {
-        id: section.id,
-        title: getLocalizedText(section.title, locale),
-        kicker: kickerOf(section.title),
-        body: getLocalizedText(section.body, locale),
-        image: section.image,
-        imageAlt: section.imageAlt
-          ? getLocalizedText(section.imageAlt, locale)
-          : undefined,
-        steps:
-          section.id === "usage"
-            ? product.usageSteps.map((step) => ({
-                number: step.number,
-                text: getLocalizedText(step.text, locale)
-              }))
-            : undefined
-      };
-    })
-  ];
-
-  const details: StoryDetails = {
-    ingredients: getLocalizedText(product.ingredientsText, locale),
-    allergens: product.allergens.map((id) => tAllergen(id)),
-    nutrition: product.nutrition.map((row) => ({
-      label: tNutrition(row.key),
-      value: row.value
-    })),
-    basis: getLocalizedText(product.nutritionBasis, locale)
-  };
-
-  const neighbors: StoryNeighbor[] = neighborPool
-    .filter((id) => id !== product.id)
-    .slice(0, 2)
-    .flatMap((id) => {
-      const neighbor = products.find((candidate) => candidate.id === id);
-      return neighbor
-        ? [{slug: neighbor.slug, name: getLocalizedText(neighbor.name, locale)}]
-        : [];
-    });
+  if (slug !== "amane-santoku") notFound();
 
   return (
-    <main className="min-h-svh bg-kinari">
-      <ProductStory
-        productId={product.id}
-        badge={getLocalizedText(product.name, locale)}
-        frames={frames}
-        details={details}
-        neighbors={neighbors}
-        locale={locale}
-      />
+    <main className="min-h-svh bg-[#f7f7f5]">
+      <RichProductStory locale={locale} />
     </main>
   );
 }
