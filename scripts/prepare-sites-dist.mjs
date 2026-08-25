@@ -18,5 +18,8 @@ cpSync(workerFile, resolve(serverDir, "index.js"));
 
 const assetsDir = resolve(openNextDir, "assets");
 if (existsSync(assetsDir)) {
+  // Static assets are deployed separately below. Keeping a second copy inside
+  // the Worker bundle can push the Worker over the hosting traversal limit.
+  rmSync(resolve(serverDir, "assets"), {recursive: true, force: true});
   cpSync(assetsDir, resolve(distDir, "static"), {recursive: true});
 }
