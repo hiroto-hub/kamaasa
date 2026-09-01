@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import {useEffect, useRef, useState} from "react";
 import {Link} from "@/i18n/navigation";
 import {LanguagePill} from "./site-header";
 
@@ -8,10 +9,11 @@ type FeaturedProduct = {
   number: string;
   category: {ja: string; en: string};
   name: {ja: string; en: string};
+  note: {ja: string; en: string};
   image: string;
   imageClassName?: string;
   href?: string;
-  className: string;
+  tone: "light" | "dark" | "warm";
 };
 
 const products: FeaturedProduct[] = [
@@ -19,114 +21,177 @@ const products: FeaturedProduct[] = [
     number: "01",
     category: {ja: "包丁", en: "KNIVES"},
     name: {ja: "amane", en: "amane"},
+    note: {ja: "釜浅オリジナル洋包丁シリーズ", en: "KAMA-ASA ORIGINAL KNIFE SERIES"},
     image: "/images/kamaasa/amane/amane-santoku.jpg",
-    imageClassName: "object-contain object-center p-7",
+    imageClassName: "object-contain object-center p-10",
     href: "/products/amane",
-    className: "featured-product--hero"
+    tone: "light"
   },
   {
     number: "02",
     category: {ja: "まな板", en: "CUTTING BOARDS"},
     name: {ja: "包丁にやさしいまな板 黒", en: "Knife-friendly Cutting Board Black"},
+    note: {ja: "刃と手に、やさしい黒。", en: "A softer surface for every edge."},
     image: "/images/kamaasa/featured/cutting-board-black.jpg",
     imageClassName: "object-cover object-center",
-    className: "featured-product--board"
+    tone: "dark"
   },
   {
     number: "03",
     category: {ja: "フライパン", en: "FRYING PANS"},
     name: {ja: "釜浅の鉄打出しフライパン", en: "KAMA-ASA Hammered Iron Frying Pan"},
+    note: {ja: "火と鉄を、毎日の道具に。", en: "Iron and fire, shaped for every day."},
     image: "/images/kamaasa/featured/frying-pan-product.jpg",
     imageClassName: "object-cover object-center",
-    className: "featured-product--pan"
+    tone: "warm"
   },
   {
     number: "04",
     category: {ja: "中華鍋", en: "WOKS"},
     name: {ja: "北京鍋", en: "Peking Wok"},
+    note: {ja: "振る、煽る。軽やかな鉄。", en: "Responsive iron for motion and flame."},
     image: "/images/kamaasa/featured/peking-wok.jpg",
     imageClassName: "object-cover object-top",
-    className: "featured-product--wok"
+    tone: "light"
   },
   {
     number: "05",
     category: {ja: "玉子焼器", en: "TAMAGOYAKI PANS"},
     name: {ja: "真鍮取手玉子焼器", en: "Brass-handle Tamagoyaki Pan"},
+    note: {ja: "銅と真鍮、熱を操るかたち。", en: "Copper and brass, made to control heat."},
     image: "/images/kamaasa/featured/tamagoyaki-pan.jpeg",
     imageClassName: "object-cover object-center",
-    className: "featured-product--egg"
+    tone: "warm"
   },
   {
     number: "06",
     category: {ja: "ごはん釜", en: "RICE COOKERS"},
     name: {ja: "釜浅のごはん釜", en: "KAMA-ASA Rice Pot"},
+    note: {ja: "一膳のために、火を整える。", en: "Heat, balanced for a better bowl of rice."},
     image: "/images/kamaasa/featured/rice-pot.jpg",
     imageClassName: "object-cover object-center",
-    className: "featured-product--rice"
+    tone: "dark"
   }
 ];
 
 export function FeaturedProductsHome({locale}: {locale: string}) {
+  const railRef = useRef<HTMLDivElement>(null);
+  const slideRefs = useRef<(HTMLElement | null)[]>([]);
+  const [current, setCurrent] = useState(0);
   const language = locale === "ja" ? "ja" : "en";
 
-  return (
-    <section className="featured-showcase min-h-svh text-[#f4f0e8]">
-      <header className="featured-showcase__header">
-        <div>
-          <p className="featured-showcase__kicker">KAMA-ASA / SELECTED TOOLS</p>
-          <h1>{language === "ja" ? "選ばれた道具、その背景へ。" : "Tools with a story to tell."}</h1>
-        </div>
-        <div className="featured-showcase__language">
-          <LanguagePill />
-        </div>
-      </header>
+  useEffect(() => {
+    const rail = railRef.current;
+    if (!rail) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible) setCurrent(Number((visible.target as HTMLElement).dataset.slide));
+      },
+      {root: rail, threshold: [0.56, 0.72]}
+    );
+    slideRefs.current.forEach((slide) => slide && observer.observe(slide));
+    return () => observer.disconnect();
+  }, []);
 
-      <div className="featured-showcase__grid">
-        {products.map((product) => {
-          const content = (
+  return (
+    <div className="featured-exhibition relative h-svh overflow-hidden text-white">
+      <div ref={railRef} className="hide-scrollbar h-full snap-y snap-mandatory overflow-y-auto overscroll-y-contain">
+        <section
+          ref={(element) => {slideRefs.current[0] = element;}}
+          data-slide="0"
+          data-active={current === 0 ? "true" : "false"}
+          className="featured-intro relative flex h-full snap-start snap-always flex-col overflow-hidden"
+        >
+          <Image src="/og-featured.png" alt="" fill priority sizes="(max-width: 639px) 100vw, 420px" className="object-cover object-center" />
+          <div className="featured-intro__veil absolute inset-0" />
+          <div className="featured-intro__top relative z-10 flex items-start justify-between px-6 pt-7">
+            <p>KAMA-ASA / SELECTED TOOLS</p>
+            <div className="text-[#181818]"><LanguagePill /></div>
+          </div>
+          <div className="relative z-10 mt-auto px-6 pb-16">
+            <p className="featured-rise featured-rise-1 mb-7 text-[10px] tracking-[0.24em] text-[#d1b276]">
+              {language === "ja" ? "六つの道具、六つの背景" : "SIX TOOLS / SIX STORIES"}
+            </p>
+            <h1 className="featured-rise featured-rise-2 max-w-[9em] font-serif text-[52px] font-normal leading-[0.98] tracking-[-0.055em]">
+              {language === "ja" ? "道具から、料理を考える。" : "Tools for the way we cook."}
+            </h1>
+            <div className="featured-rise featured-rise-3 mt-9 flex items-center gap-4 text-[9px] tracking-[0.2em] text-white/70">
+              <span className="h-px w-12 bg-white/55" />
+              <span>{language === "ja" ? "スクロールして選ぶ" : "SCROLL TO DISCOVER"}</span>
+            </div>
+          </div>
+        </section>
+
+        {products.map((product, index) => {
+          const slide = (
             <>
-              <div className="featured-product__image">
+              <div className="featured-tool__image absolute inset-0">
                 <Image
                   src={product.image}
                   alt={product.name[language]}
                   fill
-                  priority={product.number === "01"}
-                  sizes={product.number === "01" ? "(max-width: 639px) 100vw, 420px" : "210px"}
+                  sizes="(max-width: 639px) 100vw, 420px"
                   className={product.imageClassName ?? "object-cover"}
                 />
               </div>
-              <div className="featured-product__label">
-                <span className="featured-product__number">{product.number}</span>
-                <span>
-                  <small>{product.category[language]}</small>
-                  <strong>{product.name[language]}</strong>
-                </span>
-                <span aria-hidden="true" className="featured-product__arrow">↗</span>
+              <div className="featured-tool__veil absolute inset-0" />
+              <div className="featured-tool__top relative z-10 flex items-center justify-between px-6 pt-7 text-[9px] tracking-[0.22em]">
+                <span>{product.category[language]}</span>
+                <span>{product.number} / 06</span>
+              </div>
+              <div className="relative z-10 mt-auto px-6 pb-12">
+                <p className="featured-rise featured-rise-1 mb-5 text-[9px] tracking-[0.18em] text-[#c9aa70]">{product.note[language]}</p>
+                <h2 className="featured-rise featured-rise-2 max-w-[12em] font-serif text-[38px] font-normal leading-[1.08] tracking-[-0.045em]">{product.name[language]}</h2>
+                <div className="featured-rise featured-rise-3 mt-8 flex items-center justify-between border-t border-white/35 pt-4 text-[9px] tracking-[0.2em]">
+                  <span>{product.href ? (language === "ja" ? "物語を読む" : "DISCOVER THE STORY") : (language === "ja" ? "選ばれた道具" : "SELECTED TOOL")}</span>
+                  <span aria-hidden="true" className="text-lg">↗</span>
+                </div>
               </div>
             </>
           );
 
+          const className = `featured-tool featured-tool--${product.tone} relative flex h-full snap-start snap-always flex-col overflow-hidden`;
           return product.href ? (
             <Link
               key={product.number}
+              ref={(element) => {slideRefs.current[index + 1] = element;}}
+              data-slide={index + 1}
+              data-active={current === index + 1 ? "true" : "false"}
               href={product.href}
               locale={locale}
-              className={`featured-product ${product.className}`}
+              className={className}
             >
-              {content}
+              {slide}
             </Link>
           ) : (
-            <article key={product.number} className={`featured-product ${product.className}`}>
-              {content}
-            </article>
+            <section
+              key={product.number}
+              ref={(element) => {slideRefs.current[index + 1] = element;}}
+              data-slide={index + 1}
+              data-active={current === index + 1 ? "true" : "false"}
+              className={className}
+            >
+              {slide}
+            </section>
           );
         })}
       </div>
 
-      <footer className="featured-showcase__footer">
-        <span>{language === "ja" ? "道具を選んで、物語を読む" : "Choose a tool and discover its story"}</span>
-        <span aria-hidden="true">SCROLL ↓</span>
-      </footer>
-    </section>
+      <nav className="absolute right-3 top-1/2 z-30 flex -translate-y-1/2 flex-col gap-2" aria-label="Featured tools">
+        {[0, ...products.map((_, index) => index + 1)].map((slide) => (
+          <button
+            key={slide}
+            type="button"
+            aria-label={`Go to slide ${slide + 1}`}
+            aria-current={current === slide ? "step" : undefined}
+            onClick={() => slideRefs.current[slide]?.scrollIntoView({behavior: "smooth", block: "start"})}
+            className={`h-1.5 w-1.5 rounded-full border border-white/70 transition-transform ${current === slide ? "scale-150 bg-[#c9aa70]" : "bg-black/45"}`}
+          />
+        ))}
+      </nav>
+    </div>
   );
 }
