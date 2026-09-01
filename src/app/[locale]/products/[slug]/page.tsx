@@ -6,7 +6,10 @@ import {RichProductStory} from "@/components/rich-product-story";
 import {routing} from "@/i18n/routing";
 
 export function generateStaticParams() {
-  return routing.locales.map((locale) => ({locale, slug: "amane-santoku"}));
+  return routing.locales.flatMap((locale) => [
+    {locale, slug: "amane"},
+    {locale, slug: "amane-santoku"}
+  ]);
 }
 
 export async function generateMetadata({
@@ -15,15 +18,15 @@ export async function generateMetadata({
   params: Promise<{locale: string; slug: string}>;
 }): Promise<Metadata> {
   const {locale, slug} = await params;
-  if (slug !== "amane-santoku") return {};
+  if (slug !== "amane" && slug !== "amane-santoku") return {};
 
   const requestHeaders = await headers();
   const host = requestHeaders.get("x-forwarded-host") ?? requestHeaders.get("host") ?? "127.0.0.1:3011";
   const protocol = requestHeaders.get("x-forwarded-proto") ?? (host.includes("127.0.0.1") ? "http" : "https");
-  const title = "amane Santoku 175mm | KAMA-ASA Story Guide";
+  const title = "amane | KAMA-ASA Original Knife Series";
   const description = locale === "ja"
-    ? "釜浅商店オリジナルのamane三徳。Overview、7つの特徴、仕様、手入れまでを紹介します。"
-    : "Explore KAMA-ASA's amane Santoku: its overview, seven key features, specifications and care.";
+    ? "釜浅商店オリジナル洋包丁シリーズamane。その設計、関の手仕事、ラインナップ、手入れまでを紹介します。"
+    : "Discover KAMA-ASA's original amane knife series: its design, Seki craftsmanship, line-up and care.";
   const image = `${protocol}://${host}/images/kamaasa/amane/amane-santoku.jpg`;
 
   return {
@@ -42,7 +45,7 @@ export default async function ProductStoryPage({
   const {locale, slug} = await params;
   setRequestLocale(locale);
 
-  if (slug !== "amane-santoku") notFound();
+  if (slug !== "amane" && slug !== "amane-santoku") notFound();
 
   return (
     <main className="min-h-svh bg-[#f7f7f5]">

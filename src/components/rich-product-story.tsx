@@ -29,20 +29,20 @@ const copy = (ja: string, en: string): Copy => ({ja, en});
 const pages: StoryPage[] = [
   {
     kicker: copy("KAMA-ASA ORIGINAL", "KAMA-ASA ORIGINAL"),
-    title: copy("amane 三徳 175mm", "amane Santoku 175mm"),
+    title: copy("amane", "amane"),
     body: copy(
-      "はじめて握った日から、手になじむ。毎日の料理に寄り添う、釜浅商店オリジナルの三徳包丁です。",
-      "A knife that feels right from day one. KAMA-ASA's original Santoku, shaped for everyday cooking."
+      "はじめて握った日から、手になじむ。毎日の料理から専門的な仕事までを支える、釜浅商店オリジナル洋包丁シリーズです。",
+      "A knife that feels right from day one. KAMA-ASA's original knife series, shaped for everyday cooking and precise professional work."
     ),
     image: "/images/kamaasa/amane/amane-santoku.jpg",
     imageAlt: copy("amane 三徳包丁", "amane Santoku knife")
   },
   {
-    kicker: copy("OVERVIEW", "OVERVIEW"),
-    title: copy("肉も、魚も、野菜も。芯にはVG10。", "One knife for meat, fish, and vegetables."),
+    kicker: copy("THE STANDARD", "THE STANDARD"),
+    title: copy("道具の基本を、もう一度つくる。", "Reconsidering the everyday standard."),
     body: copy(
-      "三徳は、菜切包丁のまっすぐな刃と牛刀の汎用性をあわせ持つ、日本の万能包丁です。175mmの扱いやすい刃に、硬さと刃持ちに優れるVG10ステンレス鋼を採用。毎日のほとんどの食材に、一本で応えます。",
-      "Santoku combines the straight edge of a Nakiri with the versatility of a chef's knife. Its approachable 175 mm blade is made from hard, edge-retaining VG10 stainless steel—one knife for most everyday preparation."
+      "amaneが目指したのは、使う人を選ばず、毎日の料理で自然に手が伸びる究極のスタンダード。硬さと刃持ちに優れるVG10ステンレス鋼を芯に、切れ味、研ぎやすさ、握り心地をひとつずつ整えました。",
+      "amane was created as an ultimate standard: approachable, dependable and natural to reach for every day. A VG10 stainless core brings hardness and edge retention, while every detail balances cutting, sharpening and comfort."
     ),
     image: "/images/kamaasa/amane/point-01.jpg",
     imageAlt: copy("amaneで食材を切る様子", "Cutting with the amane knife")
@@ -79,8 +79,18 @@ const pages: StoryPage[] = [
     dark: true
   },
   {
+    kicker: copy("THE LINE-UP", "THE LINE-UP"),
+    title: copy("料理に合わせて、一本を選ぶ。", "One series, shaped for every task."),
+    body: copy(
+      "肉・魚・野菜を一本でこなす三徳と牛刀。長い引き切りに向く筋引、骨まわりを細かく扱う骨スキ。共通する切れ味と握り心地を、用途に合う刃の形で選べます。",
+      "Choose Santoku or Gyuto for versatile daily work, Sujihiki for long clean slices, and Honesuki for precise work around bone. Each profile shares the same considered edge and polished grip."
+    ),
+    image: "/images/kamaasa/amane/point-03.jpg",
+    imageAlt: copy("用途に合わせて選べるamaneシリーズ", "The amane knife series")
+  },
+  {
     kicker: copy("SPECIFICATION / CARE", "SPECIFICATION / CARE"),
-    title: copy("一本を、長く使う。", "Made to remain in your hand."),
+    title: copy("三徳 175mmを、長く使う。", "Living with the Santoku 175 mm."),
     body: copy(
       "食器洗浄機は使わず、洗ったあとは水分をよく拭き取ってください。研ぎ直しながら長く使え、釜浅商店では名入れにも対応しています。",
       "Do not place the knife in a dishwasher. Wash and dry it thoroughly after use. Regular sharpening keeps it working for years, and KAMA-ASA also offers name engraving."
@@ -96,8 +106,8 @@ const pages: StoryPage[] = [
     ]
   },
   {
-    kicker: copy("DISCOVER MORE", "DISCOVER MORE"),
-    title: copy("次の一本を、見つける。", "Find your next knife."),
+    kicker: copy("SHOP THE SERIES", "SHOP THE SERIES"),
+    title: copy("使い方から、次の一本へ。", "Choose the knife that fits your work."),
     body: copy(
       "同じAMANEシリーズから、用途に合わせた三本をご紹介します。日々の万能包丁から、肉や魚のための専門的な一本へ。",
       "Explore three more knives from the AMANE series, each shaped for a different task—from everyday preparation to precise work with meat and fish."
@@ -243,7 +253,7 @@ export function RichProductStory({locale}: {locale: string}) {
                       locale={locale}
                       className="mt-8 flex items-center justify-between border-y border-black/25 py-3 text-[10px] font-semibold tracking-[0.16em]"
                     >
-                      <span>{language === "ja" ? "店内マップへ戻る" : "BACK TO STORE MAP"}</span>
+                      <span>{language === "ja" ? "道具一覧へ戻る" : "BACK TO SELECTED TOOLS"}</span>
                       <span aria-hidden="true">→</span>
                     </Link>
                   </div>
@@ -263,7 +273,7 @@ export function RichProductStory({locale}: {locale: string}) {
       <Link
         href="/"
         locale={locale}
-        aria-label={language === "ja" ? "店内マップへ戻る" : "Back to store map"}
+        aria-label={language === "ja" ? "道具一覧へ戻る" : "Back to selected tools"}
         className="mincho group absolute left-4 top-4 z-30 flex h-8 items-center gap-2 border border-black/15 bg-white/75 px-3 text-[10px] font-normal tracking-[0.18em] text-black/60 backdrop-blur-sm transition-colors hover:border-black/25 hover:bg-white/85 hover:text-black/75 active:bg-white/95 active:text-black/85"
       >
         <span
@@ -272,7 +282,7 @@ export function RichProductStory({locale}: {locale: string}) {
         >
           ←
         </span>
-        <span>MAP</span>
+        <span>{language === "ja" ? "道具一覧" : "TOOLS"}</span>
       </Link>
 
       <div className="pointer-events-none absolute right-4 top-4 z-30 bg-white/90 px-2.5 py-1.5 text-[12px] font-medium tracking-[0.1em] shadow-sm backdrop-blur-sm" aria-live="polite">
