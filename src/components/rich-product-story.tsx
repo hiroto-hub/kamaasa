@@ -3,6 +3,7 @@
 import Image from "next/image";
 import {useEffect, useRef, useState} from "react";
 import {Link} from "@/i18n/navigation";
+import {KnifeFinder} from "./knife-finder";
 
 type Copy = {ja: string; en: string};
 
@@ -48,6 +49,20 @@ const pages: StoryPage[] = [
     imageAlt: copy("amaneで食材を切る様子", "Cutting with the amane knife")
   },
   {
+    kicker: copy("WHO IT'S FOR", "WHO IT'S FOR"),
+    title: copy("毎日の一本を探す人へ", "For anyone choosing one daily knife"),
+    body: copy(
+      "肉、魚、野菜を一本で切りたい方に向く三徳包丁です。家庭の普段の料理を中心に、料理を始めたばかりの方から、仕事で長く握る方まで使えるよう設計されています。丸く磨かれた柄は手が小さな方にもなじみます。",
+      "This Santoku is for anyone who wants one knife for meat, fish and vegetables. Designed around everyday home cooking, it also supports beginners and professionals who hold a knife for longer periods. Its rounded polished handle is comfortable for smaller hands, too."
+    ),
+    specs: [
+      {label: copy("おすすめ", "BEST FOR"), value: copy("万能な一本を選びたい方", "Anyone choosing one versatile knife")},
+      {label: copy("利き手", "HANDEDNESS"), value: copy("右利き向け", "Right-handed")},
+      {label: copy("普段の用途", "DAILY USE"), value: copy("肉・魚・野菜の下ごしらえ", "Preparing meat, fish and vegetables")},
+      {label: copy("お手入れ", "MAINTENANCE"), value: copy("手洗い・水分を拭く・定期的に研ぐ", "Hand-wash, dry and sharpen regularly")}
+    ]
+  },
+  {
     kicker: copy("POINT 01", "POINT 01"),
     title: copy("鋼を活かし、食材へすっと入る。", "Hard steel, shaped for a smooth cut."),
     body: copy(
@@ -90,10 +105,10 @@ const pages: StoryPage[] = [
   },
   {
     kicker: copy("SPECIFICATION / CARE", "SPECIFICATION / CARE"),
-    title: copy("三徳 175mmを、長く使う。", "Living with the Santoku 175 mm."),
+    title: copy("切れ味を整えながら長く使う", "Maintain the edge for years of use"),
     body: copy(
-      "食器洗浄機は使わず、洗ったあとは水分をよく拭き取ってください。研ぎ直しながら長く使え、釜浅商店では名入れにも対応しています。",
-      "Do not place the knife in a dishwasher. Wash and dry it thoroughly after use. Regular sharpening keeps it working for years, and KAMA-ASA also offers name engraving."
+      "切れ味は使用とともに少しずつ落ちるため、切りにくさを感じたら研ぎ直します。一枚鋼のamaneは安定して研ぎやすく、自宅で砥石を使うほか、釜浅商店の有料研ぎサービスにも依頼できます。食器洗浄機は避け、手洗い後は水分をよく拭き取ってください。骨、硬い種、冷凍食品には使用しません。",
+      "Every edge gradually dulls with use, so sharpen it when cutting begins to feel less smooth. The single-layer amane blade offers a stable sharpening feel: use a whetstone at home or KAMA-ASA's paid sharpening service. Avoid dishwashers, dry thoroughly after hand-washing, and do not cut bones, hard seeds or frozen food."
     ),
     specs: [
       {label: copy("全長", "Total length"), value: copy("300mm", "300 mm")},
@@ -261,7 +276,7 @@ export function RichProductStory({locale}: {locale: string}) {
                       ))}
                     </div>
                     <Link
-                      href="/"
+                      href="/?floor=knives"
                       locale={locale}
                       className="mt-8 flex items-center justify-between border-y border-black/25 py-3 text-[10px] font-semibold tracking-[0.16em]"
                     >
@@ -283,7 +298,7 @@ export function RichProductStory({locale}: {locale: string}) {
       </div>
 
       <Link
-        href="/"
+        href="/?floor=knives"
         locale={locale}
         aria-label={language === "ja" ? "道具一覧へ戻る" : "Back to selected tools"}
         className="mincho group absolute left-4 top-4 z-30 flex h-8 items-center gap-2 border border-black/15 bg-white/75 px-3 text-[10px] font-normal tracking-[0.18em] text-black/60 backdrop-blur-sm transition-colors hover:border-black/25 hover:bg-white/85 hover:text-black/75 active:bg-white/95 active:text-black/85"
@@ -313,6 +328,8 @@ export function RichProductStory({locale}: {locale: string}) {
           />
         ))}
       </nav>
+
+      <KnifeFinder locale={locale} />
 
     </div>
   );

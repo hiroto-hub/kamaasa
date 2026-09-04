@@ -1,6 +1,6 @@
 "use client";
 
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useTranslations} from "next-intl";
 import {useRouter} from "@/i18n/navigation";
 import {ImageWithFallback} from "./image-with-fallback";
@@ -8,7 +8,8 @@ import {LanguagePill} from "./site-header";
 
 export interface MapProduct {
   id: string;
-  slug: string;
+  slug?: string;
+  href?: string;
   name: string;
   image?: string;
   /** 地図面に対する 0〜100 の相対座標。ピンの先端が指す位置 */
@@ -77,33 +78,64 @@ function ProductPin({
 }
 
 export function StoreMapHome({
-  products,
+  knifeProducts,
+  toolProducts,
   locale
 }: {
-  products: MapProduct[];
+  knifeProducts: MapProduct[];
+  toolProducts: MapProduct[];
   locale: string;
 }) {
   const t = useTranslations("StoreMap");
   const router = useRouter();
+  const [floor, setFloor] = useState<"knives" | "tools">("knives");
+  const products = floor === "knives" ? knifeProducts : toolProducts;
   const [selectedId, setSelectedId] = useState<string | null>(
-    products[0]?.id ?? null
+    knifeProducts[0]?.id ?? null
   );
+  const isJapanese = locale === "ja";
+
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).get("floor") !== "tools") return;
+    setFloor("tools");
+    setSelectedId(toolProducts[0]?.id ?? null);
+  }, [toolProducts]);
+
+  const changeFloor = (nextFloor: "knives" | "tools") => {
+    const nextProducts = nextFloor === "knives" ? knifeProducts : toolProducts;
+    setFloor(nextFloor);
+    setSelectedId(nextProducts[0]?.id ?? null);
+  };
 
   return (
     <section
       aria-label={t("title")}
       className="relative h-svh min-h-[600px] overflow-hidden bg-kinari"
+      data-floor={floor}
     >
       {/* 写実的な俯瞰マップ。ピンは画像に焼き込まず、既存UIを重ねる。 */}
       <div className="absolute inset-0 overflow-hidden">
         <ImageWithFallback
-          src="/images/kamaasa/store-map-portrait-v2.png"
+          src={
+            floor === "knives"
+              ? "/images/kamaasa/store-map-knives-v2.png"
+              : "/images/kamaasa/store-map-cookware-v3.png"
+          }
           alt={t("title")}
           fill
           priority
           sizes="(max-width: 639px) 100vw, 420px"
           className="absolute inset-0"
-          imageClassName="object-cover object-center"
+          imageClassName={`object-cover object-center transition-[filter,transform] duration-700 ${floor === "knives" ? "grayscale-[0.42] contrast-[1.06]" : "saturate-[0.82] sepia-[0.08]"}`}
+        />
+
+        <div
+          aria-hidden="true"
+          className={`absolute inset-0 transition-colors duration-500 ${
+            floor === "knives"
+              ? "bg-[linear-gradient(145deg,rgb(19_24_27_/_0.2),transparent_52%,rgb(15_20_23_/_0.12))]"
+              : "bg-[linear-gradient(145deg,rgb(155_120_57_/_0.1),transparent_52%,rgb(92_66_34_/_0.08))]"
+          }`}
         />
 
         {/* 商品ピン */}
@@ -117,10 +149,11 @@ export function StoreMapHome({
                 aria-label={`${t("openProduct")}: ${product.name}`}
                 aria-pressed={active}
                 onClick={() => {
-                  // 選択したマーカーを真鍮色にしてから、ものがたり画面へ遷移する
                   setSelectedId(product.id);
-                  if (product.slug === "amane-santoku") {
-                    router.push(`/products/${product.slug}`, {locale});
+                  if (product.slug) {
+                    router.push(`/products/${product.slug}?floor=${floor}`, {locale});
+                  } else if (product.href) {
+                    window.location.assign(product.href);
                   }
                 }}
                 className={`absolute flex touch-manipulation flex-col items-center transition-[filter] duration-150 ease-out active:brightness-[0.78] ${
@@ -138,7 +171,7 @@ export function StoreMapHome({
                   number={index + 1}
                 />
                 <span
-                  className={`absolute bottom-[calc(100%+7px)] left-1/2 grid min-h-[34px] w-[116px] -translate-x-1/2 grid-cols-[28px_1fr] overflow-hidden border text-left shadow-[0_2px_7px_rgb(0_0_0_/_0.14)] backdrop-blur-sm transition-colors duration-300 ${
+                  className={`absolute bottom-[calc(100%+7px)] left-1/2 grid min-h-[34px] w-[104px] -translate-x-1/2 grid-cols-[25px_1fr] overflow-hidden border text-left shadow-[0_2px_7px_rgb(0_0_0_/_0.14)] backdrop-blur-sm transition-colors duration-300 ${
                     active
                       ? "border-[#171717] bg-[#171717]/95 text-white"
                       : "border-black/35 bg-[#f7f5ef]/95 text-[#171717]"
@@ -163,8 +196,38 @@ export function StoreMapHome({
         </div>
       </div>
 
+      <div className="absolute left-3 top-3 z-30 flex overflow-hidden rounded-full border border-black/20 bg-white/90 p-1 shadow-[0_3px_16px_rgb(0_0_0_/_0.16)] backdrop-blur-md">
+        <button
+          type="button"
+          aria-pressed={floor === "knives"}
+          onClick={() => changeFloor("knives")}
+          className={`rounded-full px-4 py-2 text-[9px] font-semibold tracking-[0.13em] transition-colors ${floor === "knives" ? "bg-[#1c2225] text-white" : "text-black/55"}`}
+        >
+          {isJapanese ? "包丁売場" : "KNIFE SHOP"}
+        </button>
+        <button
+          type="button"
+          aria-pressed={floor === "tools"}
+          onClick={() => changeFloor("tools")}
+          className={`rounded-full px-4 py-2 text-[9px] font-semibold tracking-[0.13em] transition-colors ${floor === "tools" ? "bg-[#8b6b31] text-white" : "text-black/55"}`}
+        >
+          {isJapanese ? "料理道具売場" : "COOKWARE SHOP"}
+        </button>
+      </div>
+
       <div className="absolute right-3 top-3 z-30 rounded-full bg-white/90 shadow-[0_2px_12px_rgb(0_0_0_/_0.16)] backdrop-blur-sm">
         <LanguagePill />
+      </div>
+
+      <div className={`pointer-events-none absolute bottom-4 left-4 z-20 max-w-[calc(100%-2rem)] rounded-sm border border-white/65 bg-[#f7f5ef]/90 px-4 py-3 text-[#171717] shadow-[0_4px_18px_rgb(0_0_0_/_0.18)] backdrop-blur-md transition-colors duration-500 ${floor === "knives" ? "border-l-[#30383c]" : "border-l-[#9b7737]"}`}>
+        <p className={`text-[9px] font-semibold tracking-[0.24em] ${floor === "knives" ? "text-[#30383c]" : "text-[#8b6b31]"}`}>
+          {floor === "knives" ? "KAMA-ASA KNIFE SHOP" : "KAMA-ASA COOKWARE SHOP"}
+        </p>
+        <p className="mt-1 font-serif text-[20px] tracking-[-0.03em]">
+          {floor === "knives"
+            ? (isJapanese ? "包丁を選ぶための売場" : "A floor for choosing a knife")
+            : (isJapanese ? "料理道具を選ぶための売場" : "A floor for choosing cookware")}
+        </p>
       </div>
 
     </section>

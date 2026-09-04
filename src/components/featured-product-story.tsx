@@ -106,7 +106,7 @@ export function FeaturedProductStoryView({locale, story}: {locale: string; story
                     <a href={story.storeUrl} hrefLang="en-US" className="mt-5 flex items-center justify-between border-y border-black/25 py-3 text-[9px] font-semibold tracking-[0.16em]">
                       <span>{language === "ja" ? "英語のオンラインストアで見る" : "VIEW ON THE ENGLISH ONLINE STORE"}</span><span aria-hidden="true">↗</span>
                     </a>
-                    <Link href="/" locale={locale} className="mt-3 flex items-center justify-between py-2 text-[9px] font-semibold tracking-[0.16em] text-black/55">
+                    <Link href="/?floor=tools" locale={locale} className="mt-3 flex items-center justify-between py-2 text-[9px] font-semibold tracking-[0.16em] text-black/55">
                       <span>{language === "ja" ? "道具一覧へ戻る" : "BACK TO SELECTED TOOLS"}</span><span aria-hidden="true">→</span>
                     </Link>
                   </div>
@@ -119,7 +119,7 @@ export function FeaturedProductStoryView({locale, story}: {locale: string; story
         })}
       </div>
 
-      <Link href="/" locale={locale} aria-label={language === "ja" ? "道具一覧へ戻る" : "Back to selected tools"} className="mincho group absolute left-4 top-4 z-30 flex h-8 items-center gap-2 border border-black/15 bg-white/80 px-3 text-[10px] tracking-[0.18em] text-black/65 backdrop-blur-sm">
+      <Link href="/?floor=tools" locale={locale} aria-label={language === "ja" ? "道具一覧へ戻る" : "Back to selected tools"} className="mincho group absolute left-4 top-4 z-30 flex h-8 items-center gap-2 border border-black/15 bg-white/80 px-3 text-[10px] tracking-[0.18em] text-black/65 backdrop-blur-sm">
         <span aria-hidden="true" className="text-[14px] leading-none">←</span><span>{language === "ja" ? "道具一覧" : "TOOLS"}</span>
       </Link>
       <div className="pointer-events-none absolute right-4 top-4 z-30 bg-white/90 px-2.5 py-1.5 text-[12px] font-medium tracking-[0.1em] shadow-sm backdrop-blur-sm" aria-live="polite">{pad2(current)} <span className="text-black/40">/ {pad2(story.pages.length)}</span></div>
