@@ -20,7 +20,7 @@ const products: FeaturedProduct[] = [
   {
     number: "01",
     category: {ja: "包丁", en: "KNIVES"},
-    name: {ja: "amane", en: "amane"},
+    name: {ja: "amane 三徳 175mm", en: "amane Santoku 175mm"},
     note: {ja: "釜浅オリジナル洋包丁シリーズ", en: "KAMA-ASA ORIGINAL KNIFE SERIES"},
     image: "/images/kamaasa/amane/amane-santoku.jpg",
     imageClassName: "object-contain object-center p-10",
@@ -34,6 +34,7 @@ const products: FeaturedProduct[] = [
     note: {ja: "刃と手に、やさしい黒。", en: "A softer surface for every edge."},
     image: "/images/kamaasa/featured/cutting-board-black.jpg",
     imageClassName: "object-cover object-center",
+    href: "/products/knife-friendly-black-cutting-board",
     tone: "dark"
   },
   {
@@ -43,6 +44,7 @@ const products: FeaturedProduct[] = [
     note: {ja: "火と鉄を、毎日の道具に。", en: "Iron and fire, shaped for every day."},
     image: "/images/kamaasa/featured/frying-pan-product.jpg",
     imageClassName: "object-cover object-center",
+    href: "/products/hammered-iron-frying-pan-26cm",
     tone: "warm"
   },
   {
@@ -50,8 +52,9 @@ const products: FeaturedProduct[] = [
     category: {ja: "中華鍋", en: "WOKS"},
     name: {ja: "北京鍋", en: "Peking Wok"},
     note: {ja: "振る、煽る。軽やかな鉄。", en: "Responsive iron for motion and flame."},
-    image: "/images/kamaasa/featured/peking-wok.jpg",
-    imageClassName: "object-cover object-top",
+    image: "/images/kamaasa/featured/peking-wok-cropped.png",
+    imageClassName: "object-contain object-center",
+    href: "/products/yamada-hammered-carbon-steel-wok",
     tone: "light"
   },
   {
@@ -61,6 +64,7 @@ const products: FeaturedProduct[] = [
     note: {ja: "銅と真鍮、熱を操るかたち。", en: "Copper and brass, made to control heat."},
     image: "/images/kamaasa/featured/tamagoyaki-pan.jpeg",
     imageClassName: "object-cover object-center",
+    href: "/products/brass-handle-copper-egg-roll-pan",
     tone: "warm"
   },
   {
@@ -69,10 +73,45 @@ const products: FeaturedProduct[] = [
     name: {ja: "釜浅のごはん釜", en: "KAMA-ASA Rice Pot"},
     note: {ja: "一膳のために、火を整える。", en: "Heat, balanced for a better bowl of rice."},
     image: "/images/kamaasa/featured/rice-pot.jpg",
-    imageClassName: "object-cover object-center",
+    imageClassName: "featured-tool__image--rice object-contain object-center",
+    href: "/products/cast-iron-rice-cooking-pot",
     tone: "dark"
   }
 ];
+
+function FittedProductTitle({children}: {children: string}) {
+  const titleRef = useRef<HTMLHeadingElement>(null);
+
+  useEffect(() => {
+    const element = titleRef.current;
+    if (!element) return;
+
+    const fitTitle = () => {
+      element.style.fontSize = "38px";
+      const range = document.createRange();
+      range.selectNodeContents(element);
+      const textWidth = range.getBoundingClientRect().width;
+      const availableWidth = element.clientWidth;
+      const fittedSize = Math.min(38, Math.max(18, 38 * availableWidth / Math.max(textWidth, 1) * 0.97));
+      element.style.fontSize = `${fittedSize}px`;
+    };
+
+    fitTitle();
+    void document.fonts.ready.then(fitTitle);
+    window.addEventListener("resize", fitTitle);
+    return () => window.removeEventListener("resize", fitTitle);
+  }, [children]);
+
+  return (
+    <h2
+      ref={titleRef}
+      className="featured-product-title featured-rise featured-rise-2 w-full max-w-full whitespace-nowrap font-serif text-[38px] font-normal leading-[1.08] tracking-[-0.045em]"
+      style={{whiteSpace: "nowrap", wordBreak: "keep-all", overflowWrap: "normal"}}
+    >
+      {children}
+    </h2>
+  );
+}
 
 export function FeaturedProductsHome({locale}: {locale: string}) {
   const railRef = useRef<HTMLDivElement>(null);
@@ -116,7 +155,7 @@ export function FeaturedProductsHome({locale}: {locale: string}) {
               {language === "ja" ? "六つの道具、六つの背景" : "SIX TOOLS / SIX STORIES"}
             </p>
             <h1 className="featured-rise featured-rise-2 max-w-[9em] font-serif text-[52px] font-normal leading-[0.98] tracking-[-0.055em]">
-              {language === "ja" ? "道具から、料理を考える。" : "Tools for the way we cook."}
+              {language === "ja" ? "道具から料理を考える" : "Tools for the way we cook"}
             </h1>
             <div className="featured-rise featured-rise-3 mt-9 flex items-center gap-4 text-[9px] tracking-[0.2em] text-white/70">
               <span className="h-px w-12 bg-white/55" />
@@ -128,7 +167,7 @@ export function FeaturedProductsHome({locale}: {locale: string}) {
         {products.map((product, index) => {
           const slide = (
             <>
-              <div className="featured-tool__image absolute inset-0">
+              <div className={`featured-tool__image absolute inset-0 ${product.number === "06" ? "bg-[#f7f7f5]" : ""}`}>
                 <Image
                   src={product.image}
                   alt={product.name[language]}
@@ -144,9 +183,9 @@ export function FeaturedProductsHome({locale}: {locale: string}) {
               </div>
               <div className="relative z-10 mt-auto px-6 pb-12">
                 <p className="featured-rise featured-rise-1 mb-5 text-[9px] tracking-[0.18em] text-[#c9aa70]">{product.note[language]}</p>
-                <h2 className="featured-rise featured-rise-2 max-w-[12em] font-serif text-[38px] font-normal leading-[1.08] tracking-[-0.045em]">{product.name[language]}</h2>
+                <FittedProductTitle>{product.name[language]}</FittedProductTitle>
                 <div className="featured-rise featured-rise-3 mt-8 flex items-center justify-between border-t border-white/35 pt-4 text-[9px] tracking-[0.2em]">
-                  <span>{product.href ? (language === "ja" ? "物語を読む" : "DISCOVER THE STORY") : (language === "ja" ? "選ばれた道具" : "SELECTED TOOL")}</span>
+                  <span>{product.number === "01" ? (language === "ja" ? "物語を読む" : "DISCOVER THE STORY") : (language === "ja" ? "選ばれた道具" : "SELECTED TOOL")}</span>
                   <span aria-hidden="true" className="text-lg">↗</span>
                 </div>
               </div>

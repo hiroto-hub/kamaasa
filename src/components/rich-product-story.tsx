@@ -29,7 +29,7 @@ const copy = (ja: string, en: string): Copy => ({ja, en});
 const pages: StoryPage[] = [
   {
     kicker: copy("KAMA-ASA ORIGINAL", "KAMA-ASA ORIGINAL"),
-    title: copy("amane", "amane"),
+    title: copy("amane 三徳 175mm", "amane Santoku 175mm"),
     body: copy(
       "はじめて握った日から、手になじむ。毎日の料理から専門的な仕事までを支える、釜浅商店オリジナル洋包丁シリーズです。",
       "A knife that feels right from day one. KAMA-ASA's original knife series, shaped for everyday cooking and precise professional work."
@@ -136,6 +136,17 @@ const relatedTools: RelatedTool[] = [
 
 const pad2 = (value: number) => String(value).padStart(2, "0");
 
+const cleanHeading = (value: string) => value
+  .replace(/[、，]/g, " ")
+  .replace(/[。．.!！?？]+$/g, "")
+  .replace(/\s+/g, " ")
+  .trim();
+
+const headingFontSize = (value: string, first: boolean) => {
+  const units = Array.from(value).reduce((total, character) => total + (/^[\x00-\x7F]$/.test(character) ? 0.55 : 1), 0);
+  return Math.min(first ? 38 : 29, Math.max(12, 326 / Math.max(units, 1)));
+};
+
 export function RichProductStory({locale}: {locale: string}) {
   const railRef = useRef<HTMLDivElement>(null);
   const pageRefs = useRef<(HTMLElement | null)[]>([]);
@@ -164,6 +175,7 @@ export function RichProductStory({locale}: {locale: string}) {
       <div ref={railRef} className="hide-scrollbar h-full snap-y snap-mandatory overflow-y-auto overscroll-y-contain">
         {pages.map((page, index) => {
           const first = index === 0;
+          const heading = cleanHeading(first ? pages[0].title[language] : page.title[language]);
           return (
             <section
               key={`${page.kicker.en}-${index}`}
@@ -192,11 +204,11 @@ export function RichProductStory({locale}: {locale: string}) {
                 <p className={`story-reveal story-reveal-1 mb-5 text-[11px] font-semibold tracking-[0.24em] ${page.dark ? "text-[#c6a66a]" : "text-[#8b6b31]"}`}>
                   {page.kicker[language]}
                 </p>
-                <h1 className={`story-reveal story-reveal-2 ${first ? "text-[38px]" : "text-[29px]"} max-w-[95%] font-medium leading-[1.12] tracking-[-0.03em]`}>
-                  {page.title[language]}
+                <h1 className="story-display story-reveal story-reveal-2 max-w-full whitespace-nowrap leading-[1.16]" style={{fontSize: `${headingFontSize(heading, first)}px`}}>
+                  {heading}
                 </h1>
                 <div className={`story-reveal story-reveal-3 my-6 h-px w-12 ${page.dark ? "bg-white/45" : "bg-black/35"}`} />
-                <p className={`story-reveal story-reveal-4 max-w-[34em] text-[14px] leading-[1.9] ${page.dark ? "text-white/78" : "text-[#4a4a4a]"}`}>
+                <p className={`story-copy story-reveal story-reveal-4 max-w-[34em] text-[14px] leading-[1.95] ${page.dark ? "text-white/78" : "text-[#4a4a4a]"}`}>
                   {page.body[language]}
                 </p>
 

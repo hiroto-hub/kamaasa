@@ -308,6 +308,30 @@ a:focus-visible {
 .story-reveal-4 { transition-delay: 400ms; }
 .story-reveal-5 { transition-delay: 520ms; }
 
+/* 商品紹介は、釜浅商店の道具説明に合う端正なエディトリアル書体で統一する。 */
+.story-display,
+.story-copy {
+  font-family:
+    "Iowan Old Style",
+    Baskerville,
+    "Times New Roman",
+    "Hiragino Mincho ProN",
+    "ヒラギノ明朝 ProN",
+    "Yu Mincho",
+    YuMincho,
+    serif;
+  font-feature-settings: "palt" 1, "kern" 1;
+  font-weight: 400;
+}
+
+.story-display {
+  letter-spacing: -0.015em;
+}
+
+.story-copy {
+  letter-spacing: 0.012em;
+}
+
 /* 道具を一画面ずつ見せる、エディトリアルな入口 */
 .featured-exhibition {
   width: 100%;
@@ -370,6 +394,20 @@ a:focus-visible {
 
 .featured-tool[data-active="true"] .featured-tool__image img {
   transform: scale(1.025);
+}
+
+.featured-tool__image img.featured-tool__image--rice {
+  transform: scale(1.08);
+}
+
+.featured-tool[data-active="true"] .featured-tool__image img.featured-tool__image--rice {
+  transform: scale(1.12);
+}
+
+.featured-product-title {
+  white-space: nowrap !important;
+  overflow-wrap: normal;
+  word-break: keep-all;
 }
 
 .featured-rise {
