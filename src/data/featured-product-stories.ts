@@ -37,7 +37,7 @@ export const featuredProductStories: FeaturedProductStory[] = [
     slug: "knife-friendly-black-cutting-board",
     title: copy("包丁にやさしいまな板 黒", "KAMA-ASA’s Knife Friendly Black Cutting Board"),
     description: copy("刃当たりのやさしさと、食材の見やすさを両立した釜浅商店の黒いまな板。", "A black cutting board designed for a gentle edge, stable prep and clear visibility."),
-    image: "/images/kamaasa/featured/cutting-board-black.jpg",
+    image: "/images/kamaasa/generated/v1/black-cutting-board.png",
     storeUrl: "https://kama-asa.co.jp/en-us/products/kama-asa-black-cutting-board",
     relatedProducts: [
       {name: copy("amane ペティナイフ", "amane Utility Knife"), image: "/images/kamaasa/related/amane-utility-knife.jpg", href: "https://kama-asa.co.jp/en-us/products/amane-petli"},
@@ -95,7 +95,7 @@ export const featuredProductStories: FeaturedProductStory[] = [
     slug: "hammered-iron-frying-pan-26cm",
     title: copy("釜浅の鉄打出しフライパン 26cm", "KAMA-ASA’s Hammered Iron Frying Pan 26cm"),
     description: copy("2.3mm厚の鉄と打出しの技で、食材のおいしさを引き出す釜浅商店オリジナルのフライパン。", "KAMA-ASA's original 2.3 mm hammered iron pan, designed to hold steady heat and bring out flavor."),
-    image: "/images/kamaasa/featured/frying-pan-product.jpg",
+    image: "/images/kamaasa/generated/v1/hammered-frying-pan.png",
     storeUrl: "https://kama-asa.co.jp/en-us/products/kama-asas-hammered-iron-fryingpan-26cm",
     relatedProducts: [
       {name: copy("釜浅の鉄打出しフライパン 20cm", "Hammered Carbon Steel Frying Pan 20cm"), image: "/images/kamaasa/related/frying-pan-20.jpg", href: "https://kama-asa.co.jp/en/products/kama-asas-hammered-iron-fryingpan-20cm"},
@@ -116,7 +116,7 @@ export const featuredProductStories: FeaturedProductStory[] = [
     slug: "yamada-hammered-carbon-steel-wok",
     title: copy("打出し中華鍋 1.6mm厚", "YAMADA Hammered Carbon Steel Wok (Thickness 1.6mm)"),
     description: copy("数千回の打出しで強く締められた、山田工業所の中華鍋。", "A 1.6 mm carbon-steel wok strengthened and shaped by thousands of hammer strikes."),
-    image: "/images/kamaasa/featured/peking-wok-cropped.png",
+    image: "/images/kamaasa/generated/v1/beijing-wok.png",
     storeUrl: "https://kama-asa.co.jp/en-us/products/hammered-single-handle-wok-size-270-300mm",
     relatedProducts: [
       {name: copy("打出し中華鍋 1.2mm厚", "YAMADA Hammered Carbon Steel Wok 1.2mm"), image: "/images/kamaasa/related/wok-12.jpg", href: "https://kama-asa.co.jp/en/products/hammered-flat-bottomed-single-handle-wok-1-2mm"},
@@ -135,7 +135,7 @@ export const featuredProductStories: FeaturedProductStory[] = [
     slug: "brass-handle-copper-egg-roll-pan",
     title: copy("真鍮取手玉子焼器 関西型", "Brass-Handle Copper egg roll Pan (Kansai Style)"),
     description: copy("1.5mm厚の銅と真鍮取手で、ふっくらした玉子焼きをつくる関西型玉子焼器。", "A professional 1.5 mm copper egg roll pan with a durable brass handle."),
-    image: "/images/kamaasa/featured/tamagoyaki-pan.jpeg",
+    image: "/images/kamaasa/generated/v1/tamagoyaki-pan.png",
     storeUrl: "https://kama-asa.co.jp/en/products/shinchu-totte-tamago-yakiki-kansai",
     relatedProducts: [
       {name: copy("銅玉子焼器 関西型", "Copper Rolled Omelette Pan (Kansai-style)"), image: "/images/kamaasa/related/egg-pan-kansai.jpg", href: "https://kama-asa.co.jp/en/products/copper-egg-roll-pan-kansai-style-12cm"},
@@ -155,7 +155,7 @@ export const featuredProductStories: FeaturedProductStory[] = [
     slug: "cast-iron-rice-cooking-pot",
     title: copy("釜浅のごはん釜", "KAMA-ASA’s Cast Iron Rice Cooking Pot"),
     description: copy("鋳鉄の蓄熱と椹の蓋で、かまどのように米を炊き上げる釜浅商店のごはん釜。", "A cast-iron rice pot with a Sawara cypress lid, engineered to cook with kamado-like efficiency."),
-    image: "/images/kamaasa/featured/rice-pot.jpg",
+    image: "/images/kamaasa/generated/v1/rice-pot.png",
     storeUrl: "https://kama-asa.co.jp/en-us/products/kama-asa-s-cast-iron-rice-cooking-pot",
     relatedProducts: [
       {name: copy("おひつ", "Ohitsu / Cooked-Rice Container"), image: "/images/kamaasa/related/rice-ohitsu.jpg", href: "https://kama-asa.co.jp/en/products/miyabi-urushi-ohitsu-cooked-rice-jar-size-18cm-24cm"},

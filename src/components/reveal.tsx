@@ -1,6 +1,6 @@
 "use client";
 
-import {useEffect, useRef} from "react";
+import {useEffect, useRef, type CSSProperties} from "react";
 
 /**
  * スクロールで画面に入ったら一度だけ .is-revealed を付ける。
@@ -9,12 +9,14 @@ import {useEffect, useRef} from "react";
 export function Reveal({
   children,
   delay = 0,
-  className = ""
+  className = "",
+  style
 }: {
   children: React.ReactNode;
   /** 連続する要素を少しずつ遅らせるための ms */
   delay?: number;
   className?: string;
+  style?: CSSProperties;
 }) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -40,7 +42,7 @@ export function Reveal({
     <div
       ref={ref}
       className={`reveal ${className}`}
-      style={delay ? {transitionDelay: `${delay}ms`} : undefined}
+      style={{...style, ...(delay ? {transitionDelay: `${delay}ms`} : {})}}
     >
       {children}
     </div>

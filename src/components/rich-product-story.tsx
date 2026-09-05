@@ -1,336 +1,183 @@
-"use client";
-
 import Image from "next/image";
-import {useEffect, useRef, useState} from "react";
 import {Link} from "@/i18n/navigation";
 import {KnifeFinder} from "./knife-finder";
+import {Reveal} from "./reveal";
 
-type Copy = {ja: string; en: string};
+type Language = "ja" | "en";
 
-type StoryPage = {
-  kicker: Copy;
-  title: Copy;
-  body: Copy;
-  image?: string;
-  imageAlt?: Copy;
-  imagePosition?: string;
-  dark?: boolean;
-  specs?: {label: Copy; value: Copy}[];
-  related?: boolean;
-};
-
-type RelatedTool = {
-  name: Copy;
-  image: string;
-  href: string;
-};
-
-const copy = (ja: string, en: string): Copy => ({ja, en});
-
-const pages: StoryPage[] = [
-  {
-    kicker: copy("KAMA-ASA ORIGINAL", "KAMA-ASA ORIGINAL"),
-    title: copy("amane 三徳 175mm", "amane Santoku 175mm"),
-    body: copy(
-      "はじめて握った日から、手になじむ。毎日の料理から専門的な仕事までを支える、釜浅商店オリジナル洋包丁シリーズです。",
-      "A knife that feels right from day one. KAMA-ASA's original knife series, shaped for everyday cooking and precise professional work."
-    ),
-    image: "/images/kamaasa/amane/amane-santoku.jpg",
-    imageAlt: copy("amane 三徳包丁", "amane Santoku knife")
+const copy = {
+  ja: {
+    back: "商品一覧",
+    eyebrow: "KAMA-ASA ORIGINAL",
+    title: "amane 三徳 175mm",
+    lead: "毎日の料理に、迷わず選べる一本",
+    dailyKicker: "FOR EVERYDAY COOKING",
+    dailyTitle: "肉も 魚も 野菜も",
+    dailyBody: "普段の下ごしらえを一本でこなせる三徳包丁です。料理を始めたばかりの方にも、毎日使う方にも自然になじみます。",
+    fitKicker: "IS THIS FOR YOU?",
+    fitTitle: "この包丁が合う人",
+    fitItems: [
+      ["01", "右利きの方", "表裏7対3の刃付けで、右手から扱いやすい設計です"],
+      ["02", "普段の料理をする方", "肉・魚・野菜を一本で切りたい方に向いています"],
+      ["03", "長く使いたい方", "切れ味が落ちたら研ぎ直しながら育てられます"]
+    ],
+    detailKicker: "POINT 01",
+    detailTitle: "切れ味と握り心地",
+    detailBody: "VG10ステンレス鋼の刃を、峰から刃先へなだらかに薄く仕上げました。丸く磨いた積層強化木の柄とステンレス口金が、長い作業を支えます。",
+    craft: "岐阜県関市の藤竹と共同開発。研削から柄付けまで、一本ずつ手を入れて仕上げています。",
+    careKicker: "CARE",
+    careTitle: "研いで 長く使う",
+    careBody: "切りにくさを感じたら砥石で研ぎ直します。自宅での研ぎに加え、釜浅商店の有料研ぎサービスも利用できます。使用後は手洗いし、水分をよく拭き取ってください。",
+    careNote: "骨・硬い種・冷凍食品には使用しないでください",
+    relatedKicker: "RELATED KNIVES",
+    relatedTitle: "次の一本を選ぶ",
+    relatedBody: "より長い刃、細かな作業、肉や魚の専門的な仕込みへ。用途に合うamaneを選べます。",
+    store: "公式オンラインストアで見る",
+    finder: "自分に合う包丁を探す",
+    related: ["amane 牛刀", "amane ペティナイフ", "amane 筋引"]
   },
-  {
-    kicker: copy("THE STANDARD", "THE STANDARD"),
-    title: copy("道具の基本を、もう一度つくる。", "Reconsidering the everyday standard."),
-    body: copy(
-      "amaneが目指したのは、使う人を選ばず、毎日の料理で自然に手が伸びる究極のスタンダード。硬さと刃持ちに優れるVG10ステンレス鋼を芯に、切れ味、研ぎやすさ、握り心地をひとつずつ整えました。",
-      "amane was created as an ultimate standard: approachable, dependable and natural to reach for every day. A VG10 stainless core brings hardness and edge retention, while every detail balances cutting, sharpening and comfort."
-    ),
-    image: "/images/kamaasa/amane/point-01.jpg",
-    imageAlt: copy("amaneで食材を切る様子", "Cutting with the amane knife")
-  },
-  {
-    kicker: copy("WHO IT'S FOR", "WHO IT'S FOR"),
-    title: copy("毎日の一本を探す人へ", "For anyone choosing one daily knife"),
-    body: copy(
-      "肉、魚、野菜を一本で切りたい方に向く三徳包丁です。家庭の普段の料理を中心に、料理を始めたばかりの方から、仕事で長く握る方まで使えるよう設計されています。丸く磨かれた柄は手が小さな方にもなじみます。",
-      "This Santoku is for anyone who wants one knife for meat, fish and vegetables. Designed around everyday home cooking, it also supports beginners and professionals who hold a knife for longer periods. Its rounded polished handle is comfortable for smaller hands, too."
-    ),
-    specs: [
-      {label: copy("おすすめ", "BEST FOR"), value: copy("万能な一本を選びたい方", "Anyone choosing one versatile knife")},
-      {label: copy("利き手", "HANDEDNESS"), value: copy("右利き向け", "Right-handed")},
-      {label: copy("普段の用途", "DAILY USE"), value: copy("肉・魚・野菜の下ごしらえ", "Preparing meat, fish and vegetables")},
-      {label: copy("お手入れ", "MAINTENANCE"), value: copy("手洗い・水分を拭く・定期的に研ぐ", "Hand-wash, dry and sharpen regularly")}
-    ]
-  },
-  {
-    kicker: copy("POINT 01", "POINT 01"),
-    title: copy("鋼を活かし、食材へすっと入る。", "Hard steel, shaped for a smooth cut."),
-    body: copy(
-      "硬いVG10鋼を活かすため、焼き入れ後の歪みを丁寧に取り、砥石で厚みを整えます。峰から刃先へなだらかに薄くなる凸刃が切り込みの抵抗を抑え、切れ離れと刃持ちを両立します。",
-      "After tempering, the hard VG10 steel is carefully straightened and refined on whetstones. A convex profile thins gradually from spine to edge, reducing resistance while balancing food release and lasting sharpness."
-    ),
-    image: "/images/kamaasa/amane/point-04.jpg",
-    imageAlt: copy("滑らかに食材へ入るamaneの刃", "The amane blade cutting smoothly")
-  },
-  {
-    kicker: copy("POINT 02", "POINT 02"),
-    title: copy("研ぎ、握り、口金。手になじむ設計。", "An edge, handle and bolster made for the hand."),
-    body: copy(
-      "表裏7対3の刃付けは右利きの手に扱いやすく、一枚鋼は研ぎながら自分の刃へ育てられます。積層強化木の柄は境目まで何度も磨き、丸く滑らかな握りへ。ステンレスの口金が水や汚れの侵入を抑えます。",
-      "A 7:3 edge suits right-handed use, while single-layer steel can be reshaped through years of sharpening. The composite-wood handle is polished into a seamless rounded grip, and a stainless bolster helps keep out water and dirt."
-    ),
-    image: "/images/kamaasa/amane/point-02.jpg",
-    imageAlt: copy("磨かれたハンドル", "The polished amane handle")
-  },
-  {
-    kicker: copy("POINT 03", "POINT 03"),
-    title: copy("釜浅商店の印と、関の手仕事。", "The KAMA-ASA mark, made in Seki."),
-    body: copy(
-      "刃の裏に刻まれた釜浅商店のマークは、ここだけのオリジナルである証です。一本を支えるのは、日本有数の刃物産地・岐阜県関市の藤竹。研削、歪み取り、仕上げ、柄付けまで、多くの工程を自社で担う作り手と共同開発しました。",
-      "The mark on the reverse identifies an original available only from KAMA-ASA. amane was developed with Fujitake in Seki, Gifu, where the maker performs much of the grinding, straightening, finishing and handle fitting in-house."
-    ),
-    image: "/images/kamaasa/amane/point-07.jpg",
-    imageAlt: copy("関市での包丁づくり", "Knife making in Seki"),
-    dark: true
-  },
-  {
-    kicker: copy("THE LINE-UP", "THE LINE-UP"),
-    title: copy("料理に合わせて、一本を選ぶ。", "One series, shaped for every task."),
-    body: copy(
-      "肉・魚・野菜を一本でこなす三徳と牛刀。長い引き切りに向く筋引、骨まわりを細かく扱う骨スキ。共通する切れ味と握り心地を、用途に合う刃の形で選べます。",
-      "Choose Santoku or Gyuto for versatile daily work, Sujihiki for long clean slices, and Honesuki for precise work around bone. Each profile shares the same considered edge and polished grip."
-    ),
-    image: "/images/kamaasa/amane/point-03.jpg",
-    imageAlt: copy("用途に合わせて選べるamaneシリーズ", "The amane knife series")
-  },
-  {
-    kicker: copy("SPECIFICATION / CARE", "SPECIFICATION / CARE"),
-    title: copy("切れ味を整えながら長く使う", "Maintain the edge for years of use"),
-    body: copy(
-      "切れ味は使用とともに少しずつ落ちるため、切りにくさを感じたら研ぎ直します。一枚鋼のamaneは安定して研ぎやすく、自宅で砥石を使うほか、釜浅商店の有料研ぎサービスにも依頼できます。食器洗浄機は避け、手洗い後は水分をよく拭き取ってください。骨、硬い種、冷凍食品には使用しません。",
-      "Every edge gradually dulls with use, so sharpen it when cutting begins to feel less smooth. The single-layer amane blade offers a stable sharpening feel: use a whetstone at home or KAMA-ASA's paid sharpening service. Avoid dishwashers, dry thoroughly after hand-washing, and do not cut bones, hard seeds or frozen food."
-    ),
-    specs: [
-      {label: copy("全長", "Total length"), value: copy("300mm", "300 mm")},
-      {label: copy("刃渡り", "Blade length"), value: copy("175mm", "175 mm")},
-      {label: copy("刃付け", "Bevel"), value: copy("両刃・右利き用", "Double bevel, right-handed")},
-      {label: copy("刃の構造", "Blade structure"), value: copy("一枚鋼", "Single layer")},
-      {label: copy("刃材", "Blade"), value: copy("V10ステンレス鋼", "V10 stainless steel")},
-      {label: copy("柄材", "Handle"), value: copy("積層強化木", "Composite wood")},
-      {label: copy("産地", "Origin"), value: copy("岐阜県関市", "Seki, Gifu, Japan")}
-    ]
-  },
-  {
-    kicker: copy("SHOP THE SERIES", "SHOP THE SERIES"),
-    title: copy("使い方から、次の一本へ。", "Choose the knife that fits your work."),
-    body: copy(
-      "同じAMANEシリーズから、用途に合わせた三本をご紹介します。日々の万能包丁から、肉や魚のための専門的な一本へ。",
-      "Explore three more knives from the AMANE series, each shaped for a different task—from everyday preparation to precise work with meat and fish."
-    ),
-    related: true
+  en: {
+    back: "TOOLS",
+    eyebrow: "KAMA-ASA ORIGINAL",
+    title: "amane Santoku 175mm",
+    lead: "One dependable knife for everyday cooking",
+    dailyKicker: "FOR EVERYDAY COOKING",
+    dailyTitle: "Meat fish and vegetables",
+    dailyBody: "A versatile Santoku for everyday preparation. It feels natural in the hand, whether you are beginning to cook or using it every day.",
+    fitKicker: "IS THIS FOR YOU?",
+    fitTitle: "Who this knife is for",
+    fitItems: [
+      ["01", "Right-handed cooks", "A 7:3 edge is shaped for comfortable right-handed use"],
+      ["02", "Everyday cooking", "One knife for preparing meat, fish and vegetables"],
+      ["03", "Long-term use", "Sharpen the edge as it dulls and keep using it for years"]
+    ],
+    detailKicker: "POINT 01",
+    detailTitle: "Edge and comfort",
+    detailBody: "VG10 stainless steel is thinned gradually from spine to edge for a smooth cut. A rounded composite-wood handle and stainless bolster support longer sessions of prep.",
+    craft: "Developed with Fujitake in Seki, Gifu. Each knife is carefully ground, straightened, finished and fitted by hand.",
+    careKicker: "CARE",
+    careTitle: "Sharpen and keep",
+    careBody: "Sharpen with a whetstone when cutting begins to feel less smooth, or use KAMA-ASA’s paid sharpening service. Hand-wash and dry thoroughly after use.",
+    careNote: "Do not use on bones, hard seeds or frozen food",
+    relatedKicker: "RELATED KNIVES",
+    relatedTitle: "Choose your next knife",
+    relatedBody: "Move to a longer blade, finer handwork or specialist preparation for meat and fish. Choose the amane profile that fits your work.",
+    store: "VIEW ON THE OFFICIAL STORE",
+    finder: "FIND YOUR KNIFE",
+    related: ["amane Chef Knife", "amane Utility Knife", "amane Sujihiki"]
   }
+} satisfies Record<Language, Record<string, unknown>>;
+
+const relatedLinks = [
+  "https://kama-asa.co.jp/en-us/products/amane-gyuto?country=US",
+  "https://kama-asa.co.jp/en-us/products/amane-petli?country=US",
+  "https://kama-asa.co.jp/en-us/products/amane-sujihiki?country=US"
 ];
 
-const relatedTools: RelatedTool[] = [
-  {
-    name: copy("amane 牛刀", "amane Chef knife"),
-    image: "/images/kamaasa/related/amane-chef-knife.jpg",
-    href: "https://kama-asa.co.jp/en-us/products/amane-gyuto?country=US"
-  },
-  {
-    name: copy("amane 筋引", "amane Sujihiki"),
-    image: "/images/kamaasa/related/amane-sujihiki.png",
-    href: "https://kama-asa.co.jp/en-us/products/amane-sujihiki?country=US"
-  },
-  {
-    name: copy("amane 骨スキ", "amane Honesuki"),
-    image: "/images/kamaasa/related/amane-honesuki.png",
-    href: "https://kama-asa.co.jp/en-us/products/amane-honesuki?country=US"
-  }
+const relatedImages = [
+  "/images/kamaasa/generated/v3/amane-gyuto.png",
+  "/images/kamaasa/generated/v3/amane-petty.png",
+  "/images/kamaasa/generated/v3/amane-sujihiki.png"
 ];
-
-const pad2 = (value: number) => String(value).padStart(2, "0");
-
-const cleanHeading = (value: string) => value
-  .replace(/[、，]/g, " ")
-  .replace(/[。．.!！?？]+$/g, "")
-  .replace(/\s+/g, " ")
-  .trim();
-
-const headingFontSize = (value: string, first: boolean) => {
-  const units = Array.from(value).reduce((total, character) => total + (/^[\x00-\x7F]$/.test(character) ? 0.55 : 1), 0);
-  return Math.min(first ? 38 : 29, Math.max(12, 326 / Math.max(units, 1)));
-};
 
 export function RichProductStory({locale}: {locale: string}) {
-  const railRef = useRef<HTMLDivElement>(null);
-  const pageRefs = useRef<(HTMLElement | null)[]>([]);
-  const [current, setCurrent] = useState(1);
-  const language: keyof Copy = locale === "ja" ? "ja" : "en";
-
-  useEffect(() => {
-    const rail = railRef.current;
-    if (!rail) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (!visible) return;
-        setCurrent(Number((visible.target as HTMLElement).dataset.page));
-      },
-      {root: rail, threshold: [0.55, 0.72]}
-    );
-    pageRefs.current.forEach((page) => page && observer.observe(page));
-    return () => observer.disconnect();
-  }, []);
+  const language: Language = locale === "ja" ? "ja" : "en";
+  const text = copy[language];
 
   return (
-    <div className="relative h-svh overflow-hidden bg-[#f7f7f5] text-[#303030]">
-      <div ref={railRef} className="hide-scrollbar h-full snap-y snap-mandatory overflow-y-auto overscroll-y-contain">
-        {pages.map((page, index) => {
-          const first = index === 0;
-          const heading = cleanHeading(first ? pages[0].title[language] : page.title[language]);
-          return (
-            <section
-              key={`${page.kicker.en}-${index}`}
-              ref={(element) => {pageRefs.current[index] = element;}}
-              data-page={index + 1}
-              data-active={current === index + 1 ? "true" : "false"}
-              aria-label={`Story page ${index + 1} of ${pages.length}`}
-              className={`story-page relative flex h-full snap-start snap-always flex-col overflow-hidden ${page.dark ? "bg-[#171717] text-white" : "bg-[#f7f7f5]"}`}
-            >
-              {page.image && (
-                <div className={`relative ${first ? "order-2 h-[58%]" : "h-[43%]"} shrink-0 overflow-hidden bg-white`}>
-                  <Image
-                    src={page.image}
-                    alt={page.imageAlt?.[language] ?? ""}
-                    fill
-                    priority={index < 2}
-                    sizes="(max-width: 639px) 100vw, 420px"
-                    className={first ? "object-contain p-6" : "object-cover"}
-                    style={{objectPosition: page.imagePosition ?? "center"}}
-                  />
-                  {!first && <div className="absolute inset-0 bg-gradient-to-t from-black/15 to-transparent" />}
-                </div>
-              )}
-
-              <div className={`relative z-10 flex flex-1 flex-col px-7 ${first ? "order-1 justify-end pb-7 pt-14" : "justify-center py-9"}`}>
-                <p className={`story-reveal story-reveal-1 mb-5 text-[11px] font-semibold tracking-[0.24em] ${page.dark ? "text-[#c6a66a]" : "text-[#8b6b31]"}`}>
-                  {page.kicker[language]}
-                </p>
-                <h1 className="story-display story-reveal story-reveal-2 max-w-full whitespace-nowrap leading-[1.16]" style={{fontSize: `${headingFontSize(heading, first)}px`}}>
-                  {heading}
-                </h1>
-                <div className={`story-reveal story-reveal-3 my-6 h-px w-12 ${page.dark ? "bg-white/45" : "bg-black/35"}`} />
-                <p className={`story-copy story-reveal story-reveal-4 max-w-[34em] text-[14px] leading-[1.95] ${page.dark ? "text-white/78" : "text-[#4a4a4a]"}`}>
-                  {page.body[language]}
-                </p>
-
-                {page.specs && (
-                  <dl className="story-reveal story-reveal-5 mt-7 border-t border-black/25 text-[12px]">
-                    {page.specs.map((item) => (
-                      <div key={item.label.en} className="grid grid-cols-[42%_1fr] border-b border-black/15 py-2.5">
-                        <dt className="text-black/55">{item.label[language]}</dt>
-                        <dd className="font-medium">{item.value[language]}</dd>
-                      </div>
-                    ))}
-                  </dl>
-                )}
-
-                {page.related && (
-                  <div className="story-reveal story-reveal-5 mt-8">
-                    <div className="mb-4 flex items-center justify-between">
-                      <p className="text-[9px] font-semibold tracking-[0.2em] text-black/55">
-                        {language === "ja" ? "関連商品" : "RELATED PRODUCTS"}
-                      </p>
-                    </div>
-                    <div className="grid grid-cols-3 gap-2">
-                      {relatedTools.map((tool, toolIndex) => (
-                        <a
-                          key={tool.name.en}
-                          href={tool.href}
-                          target="_self"
-                          hrefLang="en-US"
-                          aria-label={`${tool.name[language]} — ${language === "ja" ? "英語のECサイトで見る" : "view on the English online store"}`}
-                          className="group overflow-hidden border border-black/15 bg-white/75 text-left transition-colors active:bg-black/10"
-                        >
-                          <div className="relative h-24 bg-white/80">
-                            <Image
-                              src={tool.image}
-                              alt=""
-                              fill
-                              sizes="104px"
-                              className="object-contain p-3 transition-transform duration-300 group-hover:scale-105"
-                            />
-                          </div>
-                          <div className="grid min-h-[44px] grid-cols-[22px_1fr] border-t border-black/10">
-                            <span className="flex items-center justify-center border-r border-black/10 text-[7px] tracking-[0.08em] text-[#8b6b31]">
-                              {pad2(toolIndex + 2)}
-                            </span>
-                            <span className="flex items-center px-2 py-1.5 text-[9px] font-medium leading-[1.25]">
-                              {tool.name[language]}
-                            </span>
-                          </div>
-                        </a>
-                      ))}
-                    </div>
-                    <Link
-                      href="/?floor=knives"
-                      locale={locale}
-                      className="mt-8 flex items-center justify-between border-y border-black/25 py-3 text-[10px] font-semibold tracking-[0.16em]"
-                    >
-                      <span>{language === "ja" ? "道具一覧へ戻る" : "BACK TO SELECTED TOOLS"}</span>
-                      <span aria-hidden="true">→</span>
-                    </Link>
-                  </div>
-                )}
-              </div>
-
-              {first && (
-                <div className="pointer-events-none absolute bottom-5 left-0 right-0 z-20 text-center text-[9px] font-semibold tracking-[0.2em] text-black/55">
-                  SCROLL TO DISCOVER ↓
-                </div>
-              )}
-            </section>
-          );
-        })}
-      </div>
-
-      <Link
-        href="/?floor=knives"
-        locale={locale}
-        aria-label={language === "ja" ? "道具一覧へ戻る" : "Back to selected tools"}
-        className="mincho group absolute left-4 top-4 z-30 flex h-8 items-center gap-2 border border-black/15 bg-white/75 px-3 text-[10px] font-normal tracking-[0.18em] text-black/60 backdrop-blur-sm transition-colors hover:border-black/25 hover:bg-white/85 hover:text-black/75 active:bg-white/95 active:text-black/85"
-      >
-        <span
-          aria-hidden="true"
-          className="text-[14px] font-normal leading-none transition-transform group-active:-translate-x-0.5"
-        >
-          ←
-        </span>
-        <span>{language === "ja" ? "道具一覧" : "TOOLS"}</span>
+    <article className="amane-story">
+      <Link href="/" locale={locale} className="amane-story__back" aria-label={language === "ja" ? "商品一覧へ戻る" : "Back to products"}>
+        <span aria-hidden="true">←</span><span>{text.back as string}</span>
       </Link>
 
-      <div className="pointer-events-none absolute right-4 top-4 z-30 bg-white/90 px-2.5 py-1.5 text-[12px] font-medium tracking-[0.1em] shadow-sm backdrop-blur-sm" aria-live="polite">
-        {pad2(current)} <span className="text-black/40">/ {pad2(pages.length)}</span>
-      </div>
+      <section className="amane-scene amane-scene--hero">
+        <Image src="/images/kamaasa/generated/v2/amane-daily.jpg" alt="" fill priority sizes="(max-width: 639px) 100vw, 640px" className="object-cover object-center" />
+        <div className="amane-scene__wash amane-scene__wash--hero" />
+        <Reveal className="amane-scene__copy amane-scene__copy--top">
+          <p>{text.eyebrow as string}</p>
+          <h1>{text.title as string}</h1>
+          <span>{text.lead as string}</span>
+        </Reveal>
+        <span className="amane-story__scroll">SCROLL&nbsp;&nbsp;↓</span>
+      </section>
 
-      <nav className="absolute right-4 top-1/2 z-30 flex -translate-y-1/2 flex-col gap-2" aria-label="Story pages">
-        {pages.map((page, index) => (
-          <button
-            key={`${page.kicker.en}-dot`}
-            type="button"
-            aria-label={`Go to page ${index + 1}`}
-            aria-current={current === index + 1 ? "step" : undefined}
-            onClick={() => pageRefs.current[index]?.scrollIntoView({behavior: "smooth", block: "start"})}
-            className={`h-1.5 w-1.5 rounded-full border border-white/80 shadow-sm transition-transform ${current === index + 1 ? "scale-150 bg-[#a47c36]" : "bg-[#777]"}`}
-          />
-        ))}
-      </nav>
+      <section className="amane-scene amane-scene--daily">
+        <Image src="/images/kamaasa/generated/v1/amane-santoku.png" alt="" fill sizes="(max-width: 639px) 100vw, 640px" className="object-cover object-center" />
+        <div className="amane-scene__wash amane-scene__wash--bottom" />
+        <Reveal className="amane-scene__copy amane-scene__copy--bottom amane-scene__copy--light">
+          <p>{text.dailyKicker as string}</p>
+          <h2>{text.dailyTitle as string}</h2>
+          <span>{text.dailyBody as string}</span>
+        </Reveal>
+      </section>
 
-      <KnifeFinder locale={locale} />
+      <section className="amane-fit">
+        <Image src="/images/kamaasa/generated/v3/amane-fit-everyday-cook.png" alt="" fill sizes="(max-width: 639px) 100vw, 640px" className="amane-fit__background object-cover object-center" />
+        <div className="amane-fit__wash" />
+        <Reveal className="amane-fit__heading">
+          <p>{text.fitKicker as string}</p>
+          <h2>{text.fitTitle as string}</h2>
+        </Reveal>
+        <div className="amane-fit__list">
+          {(text.fitItems as string[][]).map(([number, title, body], index) => (
+            <Reveal key={number} delay={120 + index * 120} className="amane-fit__item">
+              <span>{number}</span>
+              <div><h3>{title}</h3><p>{body}</p></div>
+            </Reveal>
+          ))}
+        </div>
+      </section>
 
-    </div>
+      <section className="amane-scene amane-scene--detail">
+        <Image src="/images/kamaasa/generated/v2/amane-detail.jpg" alt="" fill sizes="(max-width: 639px) 100vw, 640px" className="object-cover object-center" />
+        <div className="amane-scene__wash amane-scene__wash--top" />
+        <Reveal className="amane-scene__copy amane-scene__copy--top">
+          <p>{text.detailKicker as string}</p>
+          <h2>{text.detailTitle as string}</h2>
+          <span>{text.detailBody as string}</span>
+          <small>{text.craft as string}</small>
+        </Reveal>
+      </section>
+
+      <section className="amane-scene amane-scene--care">
+        <Image src="/images/kamaasa/generated/v2/amane-care.jpg" alt="" fill sizes="(max-width: 639px) 100vw, 640px" className="object-cover object-center" />
+        <div className="amane-scene__wash amane-scene__wash--top" />
+        <Reveal className="amane-scene__copy amane-scene__copy--top">
+          <p>{text.careKicker as string}</p>
+          <h2>{text.careTitle as string}</h2>
+          <span>{text.careBody as string}</span>
+          <small>{text.careNote as string}</small>
+        </Reveal>
+      </section>
+
+      <section className="amane-related">
+        <Reveal className="amane-related__intro">
+          <p className="amane-related__kicker">{text.relatedKicker as string}</p>
+          <h2>{text.relatedTitle as string}</h2>
+          <p className="amane-related__body">{text.relatedBody as string}</p>
+        </Reveal>
+
+        <div className="product-editorial__related-grid product-editorial__related-grid--3">
+          {(text.related as string[]).map((name, index) => (
+            <Reveal key={name} delay={120 + index * 110} className="product-editorial__related-item">
+              <a href={relatedLinks[index]} hrefLang="en-US">
+                <span className="product-editorial__related-image">
+                  <Image src={relatedImages[index]} alt="" fill sizes="(max-width: 639px) 31vw, 190px" className="object-cover object-center" />
+                  <em>{String(index + 1).padStart(2, "0")}</em>
+                </span>
+                <span className="product-editorial__related-name"><strong>{name}</strong><i aria-hidden="true">↗</i></span>
+              </a>
+            </Reveal>
+          ))}
+        </div>
+
+        <a className="amane-related__store" href="https://kama-asa.co.jp/en-us/products/amane-santoku?country=US" hrefLang="en-US">
+          <span>{text.store as string}</span><span aria-hidden="true">↗</span>
+        </a>
+
+        <Link href="/" locale={locale} className="amane-related__home"><span>{text.back as string}</span><span aria-hidden="true">→</span></Link>
+        <KnifeFinder locale={locale} />
+      </section>
+    </article>
   );
 }

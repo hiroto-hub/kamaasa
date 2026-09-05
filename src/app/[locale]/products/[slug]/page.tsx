@@ -32,7 +32,7 @@ export async function generateMetadata({
   const description = isAmane
     ? (locale === "ja" ? "釜浅商店オリジナル洋包丁シリーズamane。その設計、関の手仕事、ラインナップ、手入れまでを紹介します。" : "Discover KAMA-ASA's original amane knife series: its design, Seki craftsmanship, line-up and care.")
     : story.description[locale === "ja" ? "ja" : "en"];
-  const image = `${protocol}://${host}${isAmane ? "/images/kamaasa/amane/amane-santoku.jpg" : story.image}`;
+  const image = `${protocol}://${host}${isAmane ? "/images/kamaasa/generated/v1/amane-santoku.png" : story.image}`;
 
   return {
     title,
