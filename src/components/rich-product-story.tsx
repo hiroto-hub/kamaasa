@@ -1,7 +1,10 @@
 import Image from "next/image";
 import {Link} from "@/i18n/navigation";
+import {ProductHowToGuide} from "./how-to-use-guide";
 import {KnifeFinder} from "./knife-finder";
 import {Reveal} from "./reveal";
+import {SocialShare} from "./social-share";
+import {StoryProgress} from "./story-progress";
 
 type Language = "ja" | "en";
 
@@ -13,7 +16,7 @@ const copy = {
     lead: "毎日の料理に、迷わず選べる一本",
     dailyKicker: "FOR EVERYDAY COOKING",
     dailyTitle: "肉も 魚も 野菜も",
-    dailyBody: "普段の下ごしらえを一本でこなせる三徳包丁です。料理を始めたばかりの方にも、毎日使う方にも自然になじみます。",
+    dailyBody: "肉・魚・野菜の下ごしらえを一本で。初めての方にも、毎日使う方にもなじむ三徳包丁です。",
     fitKicker: "IS THIS FOR YOU?",
     fitTitle: "この包丁が合う人",
     fitItems: [
@@ -21,17 +24,17 @@ const copy = {
       ["02", "普段の料理をする方", "肉・魚・野菜を一本で切りたい方に向いています"],
       ["03", "長く使いたい方", "切れ味が落ちたら研ぎ直しながら育てられます"]
     ],
-    detailKicker: "POINT 01",
+    detailKicker: "POINT",
     detailTitle: "切れ味と握り心地",
-    detailBody: "VG10ステンレス鋼の刃を、峰から刃先へなだらかに薄く仕上げました。丸く磨いた積層強化木の柄とステンレス口金が、長い作業を支えます。",
-    craft: "岐阜県関市の藤竹と共同開発。研削から柄付けまで、一本ずつ手を入れて仕上げています。",
+    detailBody: "薄く仕上げたVG10ステンレス鋼が、軽い切れ味を生みます。丸い木柄は手になじみ、長い下ごしらえも快適です。",
+    craft: "岐阜県関市の藤竹と共同開発し、一本ずつ仕上げています。",
     careKicker: "CARE",
     careTitle: "研いで 長く使う",
-    careBody: "切りにくさを感じたら砥石で研ぎ直します。自宅での研ぎに加え、釜浅商店の有料研ぎサービスも利用できます。使用後は手洗いし、水分をよく拭き取ってください。",
+    careBody: "切れ味が落ちたら砥石で研ぎ直せます。使用後は手洗いし、水分をよく拭き取ってください。",
     careNote: "骨・硬い種・冷凍食品には使用しないでください",
     relatedKicker: "RELATED KNIVES",
     relatedTitle: "次の一本を選ぶ",
-    relatedBody: "より長い刃、細かな作業、肉や魚の専門的な仕込みへ。用途に合うamaneを選べます。",
+    relatedBody: "刃の長さや用途から、自分に合うamaneを選べます。",
     store: "公式オンラインストアで見る",
     finder: "自分に合う包丁を探す",
     related: ["amane 牛刀", "amane ペティナイフ", "amane 筋引"]
@@ -43,7 +46,7 @@ const copy = {
     lead: "One dependable knife for everyday cooking",
     dailyKicker: "FOR EVERYDAY COOKING",
     dailyTitle: "Meat fish and vegetables",
-    dailyBody: "A versatile Santoku for everyday preparation. It feels natural in the hand, whether you are beginning to cook or using it every day.",
+    dailyBody: "One Santoku for meat, fish and vegetables. Easy to use from your first meal onward.",
     fitKicker: "IS THIS FOR YOU?",
     fitTitle: "Who this knife is for",
     fitItems: [
@@ -51,17 +54,17 @@ const copy = {
       ["02", "Everyday cooking", "One knife for preparing meat, fish and vegetables"],
       ["03", "Long-term use", "Sharpen the edge as it dulls and keep using it for years"]
     ],
-    detailKicker: "POINT 01",
+    detailKicker: "POINT",
     detailTitle: "Edge and comfort",
-    detailBody: "VG10 stainless steel is thinned gradually from spine to edge for a smooth cut. A rounded composite-wood handle and stainless bolster support longer sessions of prep.",
-    craft: "Developed with Fujitake in Seki, Gifu. Each knife is carefully ground, straightened, finished and fitted by hand.",
+    detailBody: "A thin VG10 stainless edge cuts smoothly. The rounded wood handle stays comfortable through longer preparation.",
+    craft: "Developed with Fujitake in Seki, Gifu, and finished one knife at a time.",
     careKicker: "CARE",
     careTitle: "Sharpen and keep",
-    careBody: "Sharpen with a whetstone when cutting begins to feel less smooth, or use KAMA-ASA’s paid sharpening service. Hand-wash and dry thoroughly after use.",
+    careBody: "Sharpen when the edge begins to feel dull. Hand-wash and dry thoroughly after use.",
     careNote: "Do not use on bones, hard seeds or frozen food",
     relatedKicker: "RELATED KNIVES",
     relatedTitle: "Choose your next knife",
-    relatedBody: "Move to a longer blade, finer handwork or specialist preparation for meat and fish. Choose the amane profile that fits your work.",
+    relatedBody: "Choose the amane blade length and shape that fits your cooking.",
     store: "VIEW ON THE OFFICIAL STORE",
     finder: "FIND YOUR KNIFE",
     related: ["amane Chef Knife", "amane Utility Knife", "amane Sujihiki"]
@@ -85,10 +88,11 @@ export function RichProductStory({locale}: {locale: string}) {
   const text = copy[language];
 
   return (
-    <article className="amane-story">
+    <article className="amane-story" lang={language}>
       <Link href="/" locale={locale} className="amane-story__back" aria-label={language === "ja" ? "商品一覧へ戻る" : "Back to products"}>
         <span aria-hidden="true">←</span><span>{text.back as string}</span>
       </Link>
+      <StoryProgress />
 
       <section className="amane-scene amane-scene--hero">
         <Image src="/images/kamaasa/generated/v2/amane-daily.jpg" alt="" fill priority sizes="(max-width: 639px) 100vw, 640px" className="object-cover object-center" />
@@ -110,6 +114,8 @@ export function RichProductStory({locale}: {locale: string}) {
           <span>{text.dailyBody as string}</span>
         </Reveal>
       </section>
+
+      <ProductHowToGuide locale={locale} slug="amane" />
 
       <section className="amane-fit">
         <Image src="/images/kamaasa/generated/v3/amane-fit-everyday-cook.png" alt="" fill sizes="(max-width: 639px) 100vw, 640px" className="amane-fit__background object-cover object-center" />
@@ -171,11 +177,7 @@ export function RichProductStory({locale}: {locale: string}) {
           ))}
         </div>
 
-        <a className="amane-related__store" href="https://kama-asa.co.jp/en-us/products/amane-santoku?country=US" hrefLang="en-US">
-          <span>{text.store as string}</span><span aria-hidden="true">↗</span>
-        </a>
-
-        <Link href="/" locale={locale} className="amane-related__home"><span>{text.back as string}</span><span aria-hidden="true">→</span></Link>
+        <SocialShare locale={locale} title={text.title as string} />
         <KnifeFinder locale={locale} />
       </section>
     </article>

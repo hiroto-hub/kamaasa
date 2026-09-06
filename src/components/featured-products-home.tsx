@@ -22,7 +22,7 @@ export function FeaturedProductsHome({locale}: {locale: string}) {
   const language = locale === "ja" ? "ja" : "en";
 
   return (
-    <main className="tool-tabletop">
+    <main className="tool-tabletop" lang={language}>
       <Image
         src="/images/kamaasa/generated/v2/all-tools-tabletop.jpg"
         alt=""
@@ -41,7 +41,7 @@ export function FeaturedProductsHome({locale}: {locale: string}) {
       <div className="tool-tabletop__message">
         <p className="tool-tabletop__reveal tool-tabletop__reveal--1">TOOLS FOR EVERYDAY COOKING</p>
         <h1 className="tool-tabletop__reveal tool-tabletop__reveal--2">
-          {language === "ja" ? <><span>使うほど</span><span>料理が楽しくなる</span></> : <><span>Tools that make</span><span>cooking a pleasure</span></>}
+          <span>{language === "ja" ? "気になる道具を選ぶ" : "Choose a tool"}</span>
         </h1>
       </div>
 

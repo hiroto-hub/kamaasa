@@ -2,6 +2,8 @@ import Image from "next/image";
 import {Link} from "@/i18n/navigation";
 import {type FeaturedProductStory, type LocalizedCopy} from "@/data/featured-product-stories";
 import {Reveal} from "./reveal";
+import {SocialShare} from "./social-share";
+import {StoryProgress} from "./story-progress";
 
 type ProductAssets = {
   hero: string;
@@ -102,10 +104,11 @@ export function FeaturedProductStoryView({locale, story}: {locale: string; story
   const related = story.pages.find((page) => page.related);
 
   return (
-    <article className="product-editorial">
+    <article className="product-editorial" lang={language}>
       <Link href="/" locale={locale} className="product-editorial__back" aria-label={language === "ja" ? "商品一覧へ戻る" : "Back to products"}>
         <span aria-hidden="true">←</span><span>{language === "ja" ? "商品一覧" : "TOOLS"}</span>
       </Link>
+      <StoryProgress />
 
       <section className="product-editorial__scene product-editorial__hero">
         <Image src={assets.hero} alt="" fill priority sizes="(max-width: 639px) 100vw, 640px" className="object-cover object-center" />
@@ -213,8 +216,7 @@ export function FeaturedProductStoryView({locale, story}: {locale: string; story
           ))}
         </div>
 
-        <a href={story.storeUrl} hrefLang="en-US" className="product-editorial__store"><span>{language === "ja" ? "公式オンラインストアで見る" : "VIEW ON THE OFFICIAL STORE"}</span><span aria-hidden="true">↗</span></a>
-        <Link href="/" locale={locale} className="product-editorial__home"><span>{language === "ja" ? "商品一覧へ戻る" : "BACK TO TOOLS"}</span><span aria-hidden="true">→</span></Link>
+        <SocialShare locale={locale} title={story.title[language]} />
       </section>
     </article>
   );
