@@ -146,7 +146,6 @@ export function KnifeFinder({locale}: {locale: string}) {
             <small>KNIFE GUIDE</small>
             <strong>{language === "ja" ? "自分に合う包丁を探す" : "Find your knife"}</strong>
           </span>
-          <span className="knife-finder-launcher__arrow" aria-hidden="true">→</span>
         </button>
       )}
 

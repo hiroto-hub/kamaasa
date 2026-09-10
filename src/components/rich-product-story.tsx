@@ -157,9 +157,17 @@ export function RichProductStory({locale}: {locale: string}) {
       </section>
 
       <section className="amane-related">
+        <Image
+          src="/images/kamaasa/generated/v4/amane-related-background-v1.png"
+          alt=""
+          fill
+          sizes="(max-width: 639px) 100vw, 640px"
+          className="product-editorial__related-background object-cover object-center"
+        />
+        <div className="product-editorial__related-wash" />
         <Reveal className="amane-related__intro">
           <p className="amane-related__kicker">{text.relatedKicker as string}</p>
-          <h2>{text.relatedTitle as string}</h2>
+          <h2 style={language === "ja" ? {whiteSpace: "nowrap"} : undefined}>{text.relatedTitle as string}</h2>
           <p className="amane-related__body">{text.relatedBody as string}</p>
         </Reveal>
 

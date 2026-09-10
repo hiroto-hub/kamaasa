@@ -41,7 +41,7 @@ export function SocialShare({locale, title}: {locale: string; title: string}) {
 
   return (
     <div className="social-share">
-      <p>{language === "ja" ? "この道具をシェア" : "SHARE THIS TOOL"}</p>
+      <p>SHARE</p>
       <div className="social-share__links">
         <a
           className="social-share__button social-share__button--instagram"

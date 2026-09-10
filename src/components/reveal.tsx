@@ -3,7 +3,7 @@
 import {useEffect, useRef, type CSSProperties} from "react";
 
 /**
- * スクロールで画面に入ったら一度だけ .is-revealed を付ける。
+ * スクロールで画面に入るたび .is-revealed を付け直す。
  * 動き自体は globals.css の .reveal が持つ（ゆっくり下から立ち上がる）。
  */
 export function Reveal({
@@ -26,12 +26,13 @@ export function Reveal({
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.15) {
           element.classList.add("is-revealed");
-          observer.disconnect();
+        } else if (!entry.isIntersecting) {
+          element.classList.remove("is-revealed");
         }
       },
-      {threshold: 0.15, rootMargin: "0px 0px -6% 0px"}
+      {threshold: [0, 0.15], rootMargin: "0px 0px -6% 0px"}
     );
 
     observer.observe(element);

@@ -28,22 +28,19 @@
   /* 左右の基本余白。ここ一箇所で全画面を調整する */
   --gutter: 20px;
 
-  /* 参考画像の、細く端正な和文見出しに近い游明朝を基準にする。 */
-  --mincho: "Shippori Mincho", "Hiragino Mincho ProN",
+  /* AURORA参考。端正で現代的なNoto Serif JPを和文見出しの基準にする。 */
+  --mincho: "Noto Serif JP", "Source Han Serif JP", "Hiragino Mincho ProN",
     "ヒラギノ明朝 ProN", YuMincho, "Yu Mincho", 游明朝体,
     "Noto Serif CJK JP", "Times New Roman", serif;
 
   /* ロゴ「かたりべ」専用の筆書体。読み込めない環境では明朝に落とす */
   --fude: "Yuji Syuku", var(--mincho);
-  --editorial-serif: "Hiragino Mincho ProN", "ヒラギノ明朝 ProN",
-    YuMincho, "Yu Mincho", 游明朝体, "Iowan Old Style", Baskerville,
-    "Times New Roman", serif;
-  --editorial-body: "Shippori Mincho", "Hiragino Mincho ProN",
-    "ヒラギノ明朝 ProN", YuMincho, "Yu Mincho", 游明朝体,
-    "Noto Serif CJK JP", serif;
-  --latin-editorial: "Cormorant Garamond", "Iowan Old Style", Baskerville,
-    "Times New Roman", serif;
-  --body-gothic: -apple-system, BlinkMacSystemFont, "Hiragino Sans",
+  --editorial-serif: var(--mincho);
+  --editorial-body: -apple-system, BlinkMacSystemFont, "Hiragino Sans",
+    "Hiragino Kaku Gothic ProN", "Yu Gothic", YuGothic,
+    "Noto Sans CJK JP", "Helvetica Neue", Arial, sans-serif;
+  --latin-editorial: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --body-gothic: "Noto Sans JP", -apple-system, BlinkMacSystemFont, "Hiragino Sans",
     "Hiragino Kaku Gothic ProN", "Yu Gothic", YuGothic,
     "Noto Sans CJK JP", "Helvetica Neue", Arial, sans-serif;
   --editorial-sans: var(--body-gothic);
@@ -847,11 +844,11 @@ a:focus-visible {
   bottom: 24px;
   z-index: 40;
   display: grid;
-  grid-template-columns: 58px 1fr 28px;
+  grid-template-columns: 58px 1fr;
   align-items: center;
   width: 248px;
   height: 78px;
-  padding: 8px 10px 8px 8px;
+  padding: 8px 14px 8px 8px;
   overflow: hidden;
   color: #211d18;
   text-align: left;
@@ -870,9 +867,6 @@ a:focus-visible {
 .knife-finder-launcher__copy { align-self: center; display: block; padding-left: 13px; }
 .knife-finder-launcher__copy small { display: block; margin-bottom: 7px; color: #a2753a; font: 500 8px/1 var(--editorial-sans); letter-spacing: .19em; }
 .knife-finder-launcher__copy strong { display: block; font: 400 14px/1.4 var(--editorial-serif); letter-spacing: .01em; white-space: nowrap; }
-.knife-finder-launcher__arrow { display: grid; place-items: center; width: 28px; height: 28px; color: rgba(55,43,29,.7); font: 400 15px/1 var(--editorial-serif); background: #eee3d2; border-radius: 50%; transition: transform .3s ease, background-color .25s ease; }
-.knife-finder-launcher:hover .knife-finder-launcher__arrow { transform: translateX(3px); }
-
 .knife-finder-backdrop {
   position: fixed;
   inset: 0;
@@ -987,7 +981,7 @@ a:focus-visible {
   inset: 0;
   z-index: 2;
   background:
-    radial-gradient(ellipse 118% 43% at 0 0, rgb(250 242 229 / 0.96) 0%, rgb(250 242 229 / 0.72) 52%, rgb(250 242 229 / 0.18) 82%, transparent 100%);
+    radial-gradient(ellipse 118% 36% at 0 0, rgb(250 242 229 / 0.9) 0%, rgb(250 242 229 / 0.58) 52%, rgb(250 242 229 / 0.1) 82%, transparent 100%);
   content: "";
   pointer-events: none;
 }
@@ -997,6 +991,7 @@ a:focus-visible {
   object-position: center;
   filter: saturate(1.18) contrast(1.08) brightness(1.04);
   transform: scale(1.008);
+  transform-origin: center top;
   animation: tool-tabletop-image-in 1.6s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
@@ -1004,7 +999,43 @@ a:focus-visible {
   position: absolute;
   inset: 0;
   z-index: 3;
+  transform: scale(1.008);
+  transform-origin: center top;
 }
+
+.tool-tabletop__labels {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  color: rgb(29 24 18 / 0.84);
+  font-family: var(--mincho);
+  font-size: 9.5px;
+  letter-spacing: 0.025em;
+  pointer-events: none;
+  transform: scale(1.008);
+  transform-origin: center top;
+}
+
+.tool-tabletop__label {
+  position: absolute;
+  display: block;
+  width: max-content;
+  max-width: 48%;
+  padding: 4px 7px 3px;
+  border-radius: 999px;
+  background: rgb(249 242 230 / 0.74);
+  box-shadow: 0 3px 12px rgb(54 38 19 / 0.08);
+  backdrop-filter: blur(5px);
+  white-space: nowrap;
+  transition: color 260ms ease, background-color 260ms ease, box-shadow 260ms ease, transform 360ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.tool-tabletop__label--knife { top: 35%; left: 11%; }
+.tool-tabletop__label--board { top: 35.3%; right: 22%; }
+.tool-tabletop__label--frying-pan { top: 55%; left: 11%; }
+.tool-tabletop__label--wok { top: 58%; right: 10%; }
+.tool-tabletop__label--tamagoyaki-pan { top: 82%; left: 16%; }
+.tool-tabletop__label--rice-pot { top: 85%; right: 11%; }
 
 .tool-tabletop__brand {
   position: absolute;
@@ -1025,21 +1056,22 @@ a:focus-visible {
 }
 
 .tool-tabletop__brand strong {
-  font-family: var(--mincho);
+  font-family: var(--latin-editorial);
   font-size: 11px;
   font-weight: 400;
   letter-spacing: 0.18em;
 }
 
 .tool-tabletop__brand small {
-  font-family: ui-sans-serif, system-ui, sans-serif;
-  font-size: 5px;
-  letter-spacing: 0.36em;
+  font-family: var(--latin-editorial);
+  font-size: 6px;
+  font-weight: 500;
+  letter-spacing: 0.28em;
 }
 
 .tool-tabletop__message {
   position: absolute;
-  top: 52px;
+  top: 86px;
   left: 20px;
   z-index: 4;
   width: min(330px, calc(100% - 40px));
@@ -1050,18 +1082,18 @@ a:focus-visible {
 .tool-tabletop__message p {
   margin-bottom: 12px;
   color: #795322;
-  font-family: ui-sans-serif, system-ui, sans-serif;
-  font-size: 7.5px;
-  font-weight: 600;
-  letter-spacing: 0.21em;
+  font-family: var(--latin-editorial);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.17em;
 }
 
 .tool-tabletop__message h1 {
-  font-family: var(--editorial-serif);
+  font-family: var(--mincho);
   font-size: clamp(26px, 7vw, 31px);
   font-weight: 400;
   line-height: 1.2;
-  letter-spacing: -0.045em;
+  letter-spacing: -0.025em;
   text-wrap: balance;
   text-shadow: 0 1px 0 rgb(255 252 246 / 0.55);
 }
@@ -1087,7 +1119,7 @@ a:focus-visible {
   background: rgb(25 21 16 / 0.72);
   box-shadow: 0 8px 24px rgb(25 17 9 / 0.14);
   color: white;
-  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--body-gothic);
   font-size: 8px;
   letter-spacing: 0.12em;
   backdrop-filter: blur(9px);
@@ -1144,7 +1176,7 @@ a:focus-visible {
   display: block;
   background: transparent;
   transform: scale(1);
-  transition: background 160ms ease, transform 160ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: background 220ms ease, filter 220ms ease, transform 260ms cubic-bezier(0.16, 1, 0.3, 1);
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -1164,8 +1196,29 @@ a:focus-visible {
 }
 
 .tool-tabletop__hotspot:active {
-  background: radial-gradient(circle at center, rgb(255 247 225 / 0.2), transparent 68%);
-  transform: scale(0.985);
+  background: radial-gradient(circle at center, rgb(255 249 232 / 0.3), transparent 70%);
+  filter: drop-shadow(0 7px 8px rgb(67 43 19 / 0.16));
+  transform: translateY(-3px) scale(0.992);
+}
+
+@media (hover: hover) {
+  .tool-tabletop__hotspot:hover {
+    background: radial-gradient(circle at center, rgb(255 249 232 / 0.2), transparent 72%);
+    filter: drop-shadow(0 8px 9px rgb(67 43 19 / 0.14));
+    transform: translateY(-3px);
+  }
+
+  .tool-tabletop:has(.tool-tabletop__hotspot--knife:hover) .tool-tabletop__label--knife,
+  .tool-tabletop:has(.tool-tabletop__hotspot--board:hover) .tool-tabletop__label--board,
+  .tool-tabletop:has(.tool-tabletop__hotspot--frying-pan:hover) .tool-tabletop__label--frying-pan,
+  .tool-tabletop:has(.tool-tabletop__hotspot--wok:hover) .tool-tabletop__label--wok,
+  .tool-tabletop:has(.tool-tabletop__hotspot--tamagoyaki-pan:hover) .tool-tabletop__label--tamagoyaki-pan,
+  .tool-tabletop:has(.tool-tabletop__hotspot--rice-pot:hover) .tool-tabletop__label--rice-pot {
+    color: #17120e;
+    background: rgb(255 249 238 / 0.92);
+    box-shadow: 0 8px 24px rgb(54 38 19 / 0.14);
+    transform: translateY(-2px);
+  }
 }
 
 .tool-tabletop__hotspot:active::after {
@@ -1190,50 +1243,50 @@ a:focus-visible {
 }
 
 .tool-tabletop__hotspot--knife {
-  top: 19%;
-  left: 4%;
-  width: 44%;
-  height: 16%;
+  top: 24%;
+  left: 11%;
+  width: 37%;
+  height: 13%;
   clip-path: polygon(0 20%, 100% 0, 90% 75%, 10% 100%);
 }
 
 .tool-tabletop__hotspot--board {
-  top: 19%;
-  left: 44%;
-  width: 56%;
-  height: 20%;
+  top: 23%;
+  left: 40%;
+  width: 52%;
+  height: 17%;
   clip-path: polygon(0 0, 100% 5%, 100% 100%, 0 90%);
 }
 
 .tool-tabletop__hotspot--frying-pan {
-  top: 33%;
-  left: 0;
-  width: 48%;
-  height: 29%;
+  top: 39%;
+  left: 8%;
+  width: 37%;
+  height: 25%;
   clip-path: polygon(5% 0, 88% 0, 100% 100%, 69% 100%, 56% 58%, 0 58%);
 }
 
 .tool-tabletop__hotspot--wok {
-  top: 38%;
-  left: 48%;
-  width: 52%;
-  height: 27%;
+  top: 40%;
+  left: 45%;
+  width: 47%;
+  height: 24%;
   clip-path: polygon(0 0, 94% 0, 100% 100%, 70% 100%, 0 70%);
 }
 
 .tool-tabletop__hotspot--tamagoyaki-pan {
-  top: 57%;
-  left: 0;
-  width: 56%;
-  height: 29%;
+  top: 56%;
+  left: 11%;
+  width: 48%;
+  height: 26%;
   clip-path: polygon(0 0, 29% 24%, 93% 28%, 100% 100%, 22% 100%);
 }
 
 .tool-tabletop__hotspot--rice-pot {
-  top: 62%;
-  left: 52%;
-  width: 48%;
-  height: 26%;
+  top: 61%;
+  left: 53%;
+  width: 41%;
+  height: 24%;
   clip-path: polygon(0 0, 88% 0, 100% 85%, 12% 100%);
 }
 
@@ -1279,7 +1332,7 @@ a:focus-visible {
   padding: 9px 13px;
   background: rgb(247 242 234 / 0.76);
   color: rgb(25 23 20 / 0.72);
-  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--body-gothic);
   font-size: 9px;
   letter-spacing: 0.14em;
   backdrop-filter: blur(10px);
@@ -1331,10 +1384,10 @@ a:focus-visible {
 .amane-related__kicker {
   margin-bottom: 14px;
   color: #8c6429;
-  font-family: ui-sans-serif, system-ui, sans-serif;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.22em;
+  font-family: var(--latin-editorial);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
 }
 
 .amane-scene__copy h1,
@@ -1345,7 +1398,7 @@ a:focus-visible {
   font-family: var(--editorial-serif);
   font-weight: 400;
   line-height: 1.18;
-  letter-spacing: -0.045em;
+  letter-spacing: -0.025em;
 }
 
 .amane-scene__copy h1 {
@@ -1364,9 +1417,10 @@ a:focus-visible {
   display: block;
   max-width: 31em;
   margin-top: 19px;
-  font-family: var(--editorial-body);
+  font-family: var(--body-gothic);
   font-size: 15px;
-  line-height: 1.75;
+  font-weight: 400;
+  line-height: 1.85;
 }
 
 .amane-scene__copy h1 + span {
@@ -1380,9 +1434,10 @@ a:focus-visible {
   max-width: 32em;
   margin-top: 18px;
   color: rgb(31 27 21 / 0.62);
-  font-family: var(--editorial-body);
-  font-size: 12px;
-  line-height: 1.7;
+  font-family: var(--body-gothic);
+  font-size: 12.5px;
+  font-weight: 400;
+  line-height: 1.75;
 }
 
 .amane-scene__copy--light {
@@ -1399,7 +1454,7 @@ a:focus-visible {
   bottom: 22px;
   left: 28px;
   z-index: 2;
-  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--latin-editorial);
   font-size: 8px;
   letter-spacing: 0.18em;
   color: rgb(255 255 255 / 0.72);
@@ -1454,8 +1509,8 @@ a:focus-visible {
 .amane-fit__item > span {
   padding-top: 4px;
   color: #9a7337;
-  font-family: ui-sans-serif, system-ui, sans-serif;
-  font-size: 11px;
+  font-family: var(--latin-editorial);
+  font-size: 13px;
   letter-spacing: 0.12em;
 }
 
@@ -1470,8 +1525,10 @@ a:focus-visible {
 .amane-fit__item p {
   max-width: 29em;
   color: rgb(25 23 20 / 0.7);
+  font-family: var(--body-gothic);
   font-size: 14px;
-  line-height: 1.7;
+  font-weight: 400;
+  line-height: 1.8;
 }
 
 .amane-related {
@@ -1489,8 +1546,10 @@ a:focus-visible {
   max-width: 31em;
   margin-top: 20px;
   color: rgb(25 23 20 / 0.62);
+  font-family: var(--body-gothic);
   font-size: 15px;
-  line-height: 1.75;
+  font-weight: 400;
+  line-height: 1.8;
 }
 
 .amane-related__stage,
@@ -1628,7 +1687,7 @@ a:focus-visible {
   padding: 9px 13px;
   background: rgb(247 242 234 / 0.78);
   color: rgb(25 23 20 / 0.7);
-  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--body-gothic);
   font-size: 10px;
   letter-spacing: 0.14em;
   backdrop-filter: blur(10px);
@@ -1657,6 +1716,10 @@ a:focus-visible {
   background: linear-gradient(180deg, transparent 22%, rgb(13 11 9 / 0.25) 45%, rgb(13 11 9 / 0.94) 100%);
 }
 
+.product-editorial__shade--top-strong {
+  background: linear-gradient(180deg, rgb(13 11 9 / 0.9) 0%, rgb(13 11 9 / 0.64) 32%, rgb(13 11 9 / 0.22) 56%, transparent 76%);
+}
+
 .product-editorial__shade--top {
   background: linear-gradient(180deg, rgb(245 236 223 / 0.98) 0%, rgb(245 236 223 / 0.9) 28%, rgb(245 236 223 / 0.44) 48%, transparent 67%);
 }
@@ -1666,7 +1729,7 @@ a:focus-visible {
   right: 28px;
   left: 28px;
   z-index: 2;
-  font-family: var(--editorial-serif);
+  font-family: var(--mincho);
 }
 
 .product-editorial__copy--top { top: 12%; }
@@ -1678,10 +1741,10 @@ a:focus-visible {
 .product-editorial__related-intro > p {
   margin-bottom: 13px;
   color: #916b32;
-  font-family: ui-sans-serif, system-ui, sans-serif;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.21em;
+  font-family: var(--latin-editorial);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
 }
 
 .product-editorial__copy h1,
@@ -1693,7 +1756,7 @@ a:focus-visible {
   font-family: var(--editorial-serif);
   font-weight: 400;
   line-height: 1.2;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.025em;
 }
 
 .product-editorial__copy h1 {
@@ -1714,9 +1777,10 @@ a:focus-visible {
   display: block;
   max-width: 31em;
   margin-top: 18px;
-  font-family: var(--editorial-body);
+  font-family: var(--body-gothic);
   font-size: 15px;
-  line-height: 1.75;
+  font-weight: 400;
+  line-height: 1.85;
 }
 
 .product-editorial__copy--light {
@@ -1732,7 +1796,7 @@ a:focus-visible {
   left: 28px;
   z-index: 2;
   color: rgb(255 255 255 / 0.7);
-  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--latin-editorial);
   font-size: 9px;
   letter-spacing: 0.17em;
 }
@@ -1775,9 +1839,10 @@ a:focus-visible {
 .product-howto__intro > p {
   margin-bottom: 12px;
   color: #916b32;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.22em;
+  font-family: var(--latin-editorial);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
 }
 
 .product-howto__intro h2 {
@@ -1785,7 +1850,8 @@ a:focus-visible {
   font-size: 29px;
   font-weight: 400;
   line-height: 1.25;
-  letter-spacing: -0.04em;
+  font-family: var(--mincho);
+  letter-spacing: -0.025em;
 }
 
 .product-howto[lang="ja"] .product-howto__intro h2 {
@@ -1798,8 +1864,10 @@ a:focus-visible {
   max-width: 31em;
   margin-top: 14px;
   color: rgb(32 27 22 / 0.64);
-  font-size: 13px;
-  line-height: 1.7;
+  font-family: var(--body-gothic);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.8;
 }
 
 .product-howto__flow {
@@ -1848,8 +1916,8 @@ a:focus-visible {
   border-radius: 50%;
   background: rgb(255 253 248 / 0.92);
   color: #2b241d;
-  font-family: ui-sans-serif, system-ui, sans-serif;
-  font-size: 10px;
+  font-family: var(--latin-editorial);
+  font-size: 12px;
   font-style: normal;
 }
 
@@ -1866,7 +1934,7 @@ a:focus-visible {
 .product-howto__step h3 {
   margin: 0;
   font-size: 20px;
-  font-family: var(--editorial-serif);
+  font-family: var(--mincho);
   font-weight: 400;
   line-height: 1.35;
 }
@@ -1874,8 +1942,10 @@ a:focus-visible {
 .product-howto__step p {
   margin-top: 4px;
   color: rgb(255 255 255 / 0.82);
+  font-family: var(--body-gothic);
   font-size: 12px;
-  line-height: 1.55;
+  font-weight: 400;
+  line-height: 1.65;
 }
 
 .product-editorial__movie-background {
@@ -1956,7 +2026,6 @@ a:focus-visible {
 
 .product-editorial__movie-copy,
 .product-editorial__video,
-.product-editorial__movie-number,
 .product-editorial__spec > div,
 .product-editorial__spec dl {
   position: relative;
@@ -1999,8 +2068,8 @@ a:focus-visible {
   padding: 6px 8px;
   background: rgb(17 15 12 / 0.62);
   color: rgb(255 255 255 / 0.82);
-  font-family: ui-sans-serif, system-ui, sans-serif;
-  font-size: 7px;
+  font-family: var(--latin-editorial);
+  font-size: 9px;
   letter-spacing: 0.14em;
   backdrop-filter: blur(7px);
 }
@@ -2017,19 +2086,10 @@ a:focus-visible {
   50% { opacity: 0.35; transform: scale(0.72); }
 }
 
-.product-editorial__movie-number {
-  position: absolute;
-  right: 28px;
-  bottom: 30px;
-  color: rgb(29 25 21 / 0.26);
-  font-family: var(--mincho);
-  font-size: 42px;
-}
-
 .product-editorial__point-list {
   position: absolute;
+  top: 13%;
   right: 28px;
-  bottom: 8%;
   left: 28px;
   z-index: 2;
   display: grid;
@@ -2047,8 +2107,8 @@ a:focus-visible {
 .product-editorial__point-list em {
   padding-top: 5px;
   color: #ddbd7e;
-  font-family: ui-sans-serif, system-ui, sans-serif;
-  font-size: 10px;
+  font-family: var(--latin-editorial);
+  font-size: 12px;
   font-style: normal;
 }
 
@@ -2062,27 +2122,37 @@ a:focus-visible {
   grid-column: 2;
   margin-top: 9px;
   color: rgb(255 255 255 / 0.74);
-  font-family: var(--editorial-body);
+  font-family: var(--body-gothic);
   font-size: 14px;
-  line-height: 1.68;
+  font-weight: 400;
+  line-height: 1.8;
 }
 
 .product-editorial__spec {
-  background:
-    radial-gradient(circle at 86% 19%, rgb(174 119 55 / 0.17), transparent 29%),
-    linear-gradient(135deg, #f5efe6, #e9dccb);
+  isolation: isolate;
+  overflow: hidden;
+  color: #fffaf2;
+  background: #211b15;
   font-family: var(--editorial-serif);
 }
 
-.product-editorial__spec-mark {
+.product-editorial__spec-background {
+  z-index: 0;
+  object-fit: cover;
+}
+
+.product-editorial__spec-wash {
   position: absolute;
-  top: 12%;
-  right: -92px;
-  width: 240px;
-  height: 240px;
-  border: 1px solid rgb(130 88 40 / 0.2);
-  border-radius: 50%;
-  box-shadow: inset 0 0 0 28px rgb(255 255 255 / 0.12), 0 0 0 58px rgb(130 88 40 / 0.035);
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(180deg, rgb(16 13 10 / 0.88) 0%, rgb(16 13 10 / 0.74) 42%, rgb(16 13 10 / 0.46) 68%, rgb(16 13 10 / 0.2) 100%),
+    linear-gradient(90deg, rgb(20 16 12 / 0.35), transparent 70%);
+  pointer-events: none;
+}
+
+.product-editorial__spec-mark {
+  display: none;
 }
 
 .product-editorial__spec-list {
@@ -2091,7 +2161,7 @@ a:focus-visible {
 }
 
 .product-editorial__spec-list dl {
-  margin-top: 50px;
+  margin-top: 28px;
 }
 
 .product-editorial__copy.reveal > *,
@@ -2127,30 +2197,55 @@ a:focus-visible {
 .product-editorial__spec dl {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 24px 20px;
-  margin-top: 50px;
+  gap: 18px 20px;
+  margin-top: 28px;
+  padding: 20px;
+  border: 1px solid rgb(255 255 255 / 0.18);
+  border-radius: 18px;
+  background: rgb(20 16 12 / 0.34);
+  box-shadow: 0 20px 52px rgb(0 0 0 / 0.18);
+  backdrop-filter: blur(12px);
 }
 
 .product-editorial__spec dl > div { min-width: 0; }
 
 .product-editorial__spec dt {
   margin-bottom: 7px;
-  color: #99723b;
-  font-family: ui-sans-serif, system-ui, sans-serif;
-  font-size: 10px;
+  color: #e2bf7b;
+  font-family: var(--latin-editorial);
+  font-size: 11px;
   letter-spacing: 0.13em;
 }
 
 .product-editorial__spec dd {
-  font-family: var(--editorial-body);
+  color: rgb(255 250 242 / 0.92);
+  font-family: var(--body-gothic);
   font-size: 14px;
-  line-height: 1.55;
+  font-weight: 400;
+  line-height: 1.65;
 }
 
 .product-editorial__related {
   padding-bottom: 96px;
   background: #e8dfd1;
   font-family: var(--editorial-serif);
+}
+
+.product-editorial__related-background,
+.product-editorial__related-wash {
+  position: absolute;
+  inset: 0;
+}
+
+.product-editorial__related-background {
+  z-index: 0;
+}
+
+.product-editorial__related-wash {
+  z-index: 1;
+  background:
+    linear-gradient(180deg, rgb(244 237 227 / 0.94) 0%, rgb(244 237 227 / 0.82) 47%, rgb(236 223 205 / 0.58) 100%),
+    linear-gradient(90deg, rgb(247 241 232 / 0.34), transparent 72%);
 }
 
 .product-editorial__related > .product-editorial__related-intro,
@@ -2170,6 +2265,15 @@ a:focus-visible {
   gap: 10px;
   width: 100%;
   margin-top: 40px;
+}
+
+.product-editorial__related > .social-share {
+  z-index: 2;
+}
+
+.amane-related > .social-share,
+.amane-related > .knife-finder {
+  z-index: 2;
 }
 
 .product-editorial__related-grid--2 {
@@ -2218,8 +2322,8 @@ a:focus-visible {
   left: 9px;
   z-index: 2;
   color: rgb(29 24 19 / 0.55);
-  font-family: ui-sans-serif, system-ui, sans-serif;
-  font-size: 7px;
+  font-family: var(--latin-editorial);
+  font-size: 9px;
   font-style: normal;
   letter-spacing: 0.13em;
 }
@@ -2238,8 +2342,8 @@ a:focus-visible {
 
 .product-editorial__related-name strong {
   font-family: var(--mincho);
-  font-size: 11px;
-  font-weight: 500;
+  font-size: 11.5px;
+  font-weight: 400;
   line-height: 1.45;
 }
 
@@ -2264,8 +2368,9 @@ a:focus-visible {
   background: rgb(246 240 232 / 0.72);
   box-shadow: 0 5px 18px rgb(46 35 23 / 0.08);
   color: rgb(32 27 22 / 0.55);
-  font-family: var(--mincho);
-  font-size: 11px;
+  font-family: var(--latin-editorial);
+  font-size: 13px;
+  font-weight: 500;
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.1em;
   line-height: 1;
@@ -2274,7 +2379,7 @@ a:focus-visible {
 
 .story-progress span:first-child {
   color: #8e672e;
-  font-size: 14px;
+  font-size: 17px;
 }
 
 .story-progress i {
@@ -2286,21 +2391,22 @@ a:focus-visible {
   position: relative;
   display: grid;
   justify-items: center;
-  margin-top: 26px;
+  margin-top: 40px;
   padding-block: 4px 1px;
   color: #2a241e;
 }
 
 .social-share > p {
   color: rgb(42 36 30 / 0.67);
-  font-size: 10px;
+  font-family: var(--body-gothic);
+  font-size: 11px;
   letter-spacing: 0.16em;
 }
 
 .social-share__links {
   display: flex;
   align-items: center;
-  gap: 11px;
+  gap: 17px;
   margin-top: 13px;
 }
 
@@ -2310,7 +2416,7 @@ a:focus-visible {
   height: 36px;
   place-items: center;
   border: 1px solid rgb(70 56 40 / 0.12);
-  border-radius: 50%;
+  border-radius: 10px;
   background: rgb(255 253 248 / 0.7);
   box-shadow: 0 5px 18px rgb(49 36 22 / 0.07);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
@@ -2323,14 +2429,14 @@ a:focus-visible {
 
 .social-share__button--x {
   border-color: #191919;
-  border-radius: 50%;
+  border-radius: 10px;
   background: #191919;
   color: #fff;
 }
 
 .social-share__button--instagram {
   border-color: transparent;
-  border-radius: 50%;
+  border-radius: 10px;
   background: radial-gradient(circle at 31% 105%, #feda75 0 18%, #fa7e1e 35%, #d62976 58%, #962fbf 78%, #4f5bd5 100%);
   color: #fff;
 }
@@ -2342,7 +2448,7 @@ a:focus-visible {
 
 .social-share__button--line {
   border-color: #06ad4d;
-  border-radius: 50%;
+  border-radius: 10px;
   background: #06ad4d;
   color: #fff;
 }
@@ -2364,14 +2470,7 @@ a:focus-visible {
   letter-spacing: 0.08em;
 }
 
-.amane-fit__item p,
-.amane-related__body,
-.product-howto__intro > span,
-.product-howto__step p {
-  font-family: var(--editorial-body);
-}
-
-/* 写真と文章は端正な明朝でつなぎ、操作要素と小さなラベルだけをゴシックにする。 */
+/* 見出しは端正な明朝、説明文は読みやすい角ゴ、英字ラベルは古典的なセリフ体で役割を分ける。 */
 .amane-story,
 .product-editorial {
   font-family: var(--body-gothic);
@@ -2379,7 +2478,7 @@ a:focus-visible {
 
 .amane-story :where(h1, h2),
 .product-editorial :where(h1, h2) {
-  font-family: var(--editorial-serif);
+  font-family: var(--mincho);
 }
 
 .tool-tabletop[lang="en"] .tool-tabletop__message h1,

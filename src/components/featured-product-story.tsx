@@ -8,34 +8,41 @@ import {StoryProgress} from "./story-progress";
 type ProductAssets = {
   hero: string;
   detail: string;
+  specBackground: string;
   movieBackgrounds: string[];
   relatedItems: string[];
+  relatedBackground?: string;
 };
 
 const assetsBySlug: Record<string, ProductAssets> = {
   "knife-friendly-black-cutting-board": {
     hero: "/images/kamaasa/generated/v2/board-use.jpg",
     detail: "/images/kamaasa/generated/v2/board-detail.jpg",
+    specBackground: "/images/kamaasa/generated/v4/spec-board-texture.png",
     movieBackgrounds: [],
     relatedItems: [
       "/images/kamaasa/generated/v3/amane-petty.png",
       "/images/kamaasa/generated/v3/amane-gyuto.png",
       "/images/kamaasa/generated/v3/amane-santoku.png"
-    ]
+    ],
+    relatedBackground: "/images/kamaasa/generated/v4/board-related-background-v1.png"
   },
   "hammered-iron-frying-pan-26cm": {
     hero: "/images/kamaasa/generated/v2/frying-pan-use.jpg",
     detail: "/images/kamaasa/generated/v2/frying-pan-detail.jpg",
+    specBackground: "/images/kamaasa/generated/v4/spec-frying-pan-texture.png",
     movieBackgrounds: ["/images/kamaasa/generated/v3/movie-frying-fire.png"],
     relatedItems: [
       "/images/kamaasa/generated/v3/frying-20.png",
       "/images/kamaasa/generated/v3/frying-lid.png",
       "/images/kamaasa/generated/v3/frying-double.png"
-    ]
+    ],
+    relatedBackground: "/images/kamaasa/generated/v4/frying-related-background-v1.png"
   },
   "yamada-hammered-carbon-steel-wok": {
     hero: "/images/kamaasa/generated/v2/wok-use.jpg",
     detail: "/images/kamaasa/generated/v2/wok-detail.jpg",
+    specBackground: "/images/kamaasa/generated/v4/spec-wok-texture.png",
     movieBackgrounds: [
       "/images/kamaasa/generated/v3/movie-wok-fried-rice.png",
       "/images/kamaasa/generated/v3/movie-wok-care.png"
@@ -43,11 +50,13 @@ const assetsBySlug: Record<string, ProductAssets> = {
     relatedItems: [
       "/images/kamaasa/generated/v3/wok-round.png",
       "/images/kamaasa/generated/v3/wok-flat.png"
-    ]
+    ],
+    relatedBackground: "/images/kamaasa/generated/v4/wok-related-background-v1.png"
   },
   "brass-handle-copper-egg-roll-pan": {
     hero: "/images/kamaasa/generated/v2/egg-pan-use.jpg",
     detail: "/images/kamaasa/generated/v2/egg-pan-detail.jpg",
+    specBackground: "/images/kamaasa/generated/v4/spec-egg-pan-texture.png",
     movieBackgrounds: [
       "/images/kamaasa/generated/v3/movie-egg-roll.png",
       "/images/kamaasa/generated/v3/movie-egg-bento.png"
@@ -56,11 +65,13 @@ const assetsBySlug: Record<string, ProductAssets> = {
       "/images/kamaasa/generated/v3/egg-kansai.png",
       "/images/kamaasa/generated/v3/egg-kanto.png",
       "/images/kamaasa/generated/v3/egg-lid.png"
-    ]
+    ],
+    relatedBackground: "/images/kamaasa/generated/v4/egg-related-background-v1.png"
   },
   "cast-iron-rice-cooking-pot": {
     hero: "/images/kamaasa/generated/v2/rice-pot-use.jpg",
     detail: "/images/kamaasa/generated/v2/rice-pot-detail.jpg",
+    specBackground: "/images/kamaasa/generated/v4/spec-rice-pot-texture.png",
     movieBackgrounds: [
       "/images/kamaasa/generated/v3/movie-rice-steam.png",
       "/images/kamaasa/generated/v3/movie-rice-care.png"
@@ -69,7 +80,8 @@ const assetsBySlug: Record<string, ProductAssets> = {
       "/images/kamaasa/generated/v3/rice-ohitsu.png",
       "/images/kamaasa/generated/v3/rice-hangiri.png",
       "/images/kamaasa/generated/v3/rice-paddle.png"
-    ]
+    ],
+    relatedBackground: "/images/kamaasa/generated/v4/rice-related-background-v1.png"
   }
 };
 
@@ -94,7 +106,7 @@ const japaneseHeadingStyle = (value: string, max = 36) => {
 
 export function FeaturedProductStoryView({locale, story}: {locale: string; story: FeaturedProductStory}) {
   const language: keyof LocalizedCopy = locale === "ja" ? "ja" : "en";
-  const assets = assetsBySlug[story.slug] ?? {hero: story.image, detail: story.image, movieBackgrounds: [], relatedItems: []};
+  const assets = assetsBySlug[story.slug] ?? {hero: story.image, detail: story.image, specBackground: story.image, movieBackgrounds: [], relatedItems: []};
   const hero = story.pages[0];
   const videos = story.pages.filter((page) => page.videoId);
   const editorialPages = story.pages.filter((page, index) => index > 0 && !page.videoId && !page.related && !page.specs);
@@ -102,6 +114,7 @@ export function FeaturedProductStoryView({locale, story}: {locale: string; story
   const secondary = editorialPages.slice(1, 3);
   const specification = story.pages.find((page) => page.specs);
   const related = story.pages.find((page) => page.related);
+  const relatedTitle = cleanHeading(related?.title[language] ?? (language === "ja" ? "次の道具を選ぶ" : "Choose your next tool"));
 
   return (
     <article className="product-editorial" lang={language}>
@@ -145,7 +158,6 @@ export function FeaturedProductStoryView({locale, story}: {locale: string; story
             />
             <span className="product-editorial__playing"><i aria-hidden="true" />AUTOPLAY FILM</span>
           </Reveal>
-          <Reveal delay={320} className="product-editorial__movie-number">{String(index + 1).padStart(2, "0")}</Reveal>
         </section>
       ))}
 
@@ -164,7 +176,7 @@ export function FeaturedProductStoryView({locale, story}: {locale: string; story
       {secondary.length > 0 && (
         <section className="product-editorial__scene product-editorial__points">
           <Image src={story.image} alt="" fill sizes="(max-width: 639px) 100vw, 640px" className="object-cover object-center" />
-          <div className="product-editorial__shade product-editorial__shade--bottom-strong" />
+          <div className="product-editorial__shade product-editorial__shade--top-strong" />
           <div className="product-editorial__point-list">
             {secondary.map((page, index) => (
               <Reveal key={page.kicker.en} delay={index * 150} className="product-editorial__point-item">
@@ -179,6 +191,8 @@ export function FeaturedProductStoryView({locale, story}: {locale: string; story
 
       {specification?.specs && (
         <section className="product-editorial__spec">
+          <Image src={assets.specBackground} alt="" fill sizes="(max-width: 639px) 100vw, 640px" className="product-editorial__spec-background object-cover object-center" />
+          <span className="product-editorial__spec-wash" aria-hidden="true" />
           <span className="product-editorial__spec-mark" aria-hidden="true" />
           <Reveal>
             <p>{specification.kicker[language]}</p>
@@ -196,9 +210,21 @@ export function FeaturedProductStoryView({locale, story}: {locale: string; story
       )}
 
       <section className="product-editorial__related">
+        {assets.relatedBackground && (
+          <>
+            <Image
+              src={assets.relatedBackground}
+              alt=""
+              fill
+              sizes="(max-width: 639px) 100vw, 640px"
+              className="product-editorial__related-background object-cover object-center"
+            />
+            <div className="product-editorial__related-wash" />
+          </>
+        )}
         <Reveal className="product-editorial__related-intro">
           <p>{related?.kicker[language] ?? (language === "ja" ? "関連商品" : "RELATED PRODUCTS")}</p>
-          <h2>{cleanHeading(related?.title[language] ?? (language === "ja" ? "次の道具を選ぶ" : "Choose your next tool"))}</h2>
+          <h2 style={language === "ja" ? japaneseHeadingStyle(relatedTitle, 34) : undefined}>{relatedTitle}</h2>
           {related && <span>{related.body[language]}</span>}
         </Reveal>
 

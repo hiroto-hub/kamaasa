@@ -1,10 +1,7 @@
 import type {Metadata} from "next";
 import {headers} from "next/headers";
-import "@fontsource/shippori-mincho/japanese-400.css";
-import "@fontsource/shippori-mincho/japanese-500.css";
-import "@fontsource/shippori-mincho/latin-400.css";
-import "@fontsource/shippori-mincho/latin-500.css";
-import "@fontsource/cormorant-garamond/500.css";
+import "@fontsource/noto-serif-jp/japanese-400.css";
+import "@fontsource/noto-sans-jp/japanese-400.css";
 import "./globals.css";
 
 export async function generateMetadata(): Promise<Metadata> {

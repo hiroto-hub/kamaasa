@@ -24,7 +24,7 @@ export function FeaturedProductsHome({locale}: {locale: string}) {
   return (
     <main className="tool-tabletop" lang={language}>
       <Image
-        src="/images/kamaasa/generated/v2/all-tools-tabletop.jpg"
+        src="/images/kamaasa/generated/v3/all-tools-tabletop-mobile-safe-v2.png"
         alt=""
         fill
         priority
@@ -56,6 +56,14 @@ export function FeaturedProductsHome({locale}: {locale: string}) {
           />
         ))}
       </nav>
+
+      <div className="tool-tabletop__labels" aria-hidden="true">
+        {productHotspots.map((product) => (
+          <span key={product.id} className={`tool-tabletop__label tool-tabletop__label--${product.id}`}>
+            {product.name[language]}
+          </span>
+        ))}
+      </div>
 
       <div className="tool-tabletop__hint tool-tabletop__reveal tool-tabletop__reveal--3">
         <i aria-hidden="true" />
