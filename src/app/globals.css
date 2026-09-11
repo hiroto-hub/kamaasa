@@ -46,6 +46,27 @@
   --editorial-sans: var(--body-gothic);
 }
 
+/* 日本語は Noto Sans JP、英語は Helvetica をサイト全体の書体にする。 */
+.locale-ja {
+  --mincho: "Noto Sans JP", sans-serif;
+  --fude: "Noto Sans JP", sans-serif;
+  --editorial-serif: "Noto Sans JP", sans-serif;
+  --editorial-body: "Noto Sans JP", sans-serif;
+  --body-gothic: "Noto Sans JP", sans-serif;
+  --editorial-sans: "Noto Sans JP", sans-serif;
+  --latin-editorial: Helvetica, "Helvetica Neue", Arial, sans-serif;
+}
+
+.locale-en {
+  --mincho: Helvetica, "Helvetica Neue", Arial, sans-serif;
+  --fude: Helvetica, "Helvetica Neue", Arial, sans-serif;
+  --editorial-serif: Helvetica, "Helvetica Neue", Arial, sans-serif;
+  --editorial-body: Helvetica, "Helvetica Neue", Arial, sans-serif;
+  --body-gothic: Helvetica, "Helvetica Neue", Arial, sans-serif;
+  --editorial-sans: Helvetica, "Helvetica Neue", Arial, sans-serif;
+  --latin-editorial: Helvetica, "Helvetica Neue", Arial, sans-serif;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -1322,14 +1343,15 @@ a:focus-visible {
 
 .amane-story__back {
   position: fixed;
-  top: 18px;
+  top: 20px;
   left: max(18px, calc(50% - var(--shell-width) / 2 + 18px));
   z-index: 40;
   display: flex;
   align-items: center;
-  gap: 9px;
+  gap: 7px;
   border-radius: 999px;
-  padding: 9px 13px;
+  min-height: 34px;
+  padding: 0 11px;
   background: rgb(247 242 234 / 0.76);
   color: rgb(25 23 20 / 0.72);
   font-family: var(--body-gothic);
@@ -1677,18 +1699,19 @@ a:focus-visible {
 
 .product-editorial__back {
   position: fixed;
-  top: 18px;
+  top: 20px;
   left: max(18px, calc(50% - var(--shell-width) / 2 + 18px));
   z-index: 40;
   display: flex;
   align-items: center;
-  gap: 9px;
+  gap: 7px;
   border-radius: 999px;
-  padding: 9px 13px;
+  min-height: 34px;
+  padding: 0 11px;
   background: rgb(247 242 234 / 0.78);
   color: rgb(25 23 20 / 0.7);
   font-family: var(--body-gothic);
-  font-size: 10px;
+  font-size: 9px;
   letter-spacing: 0.14em;
   backdrop-filter: blur(10px);
 }
@@ -2355,31 +2378,99 @@ a:focus-visible {
 
 .story-progress {
   position: fixed;
-  top: 22px;
-  right: max(18px, calc(50% - var(--shell-width) / 2 + 18px));
+  top: 25px;
+  right: auto;
+  left: 50%;
   z-index: 40;
   display: flex;
-  align-items: baseline;
-  gap: 7px;
-  min-width: 76px;
-  padding: 7px 10px;
-  border: 1px solid rgb(255 255 255 / 0.38);
+  align-items: center;
+  gap: 5px;
+  min-width: 68px;
+  min-height: 24px;
+  justify-content: center;
+  padding: 0 8px;
+  border: 1px solid rgb(70 56 40 / 0.1);
   border-radius: 999px;
-  background: rgb(246 240 232 / 0.72);
-  box-shadow: 0 5px 18px rgb(46 35 23 / 0.08);
-  color: rgb(32 27 22 / 0.55);
+  background: rgb(246 240 232 / 0.48);
+  box-shadow: none;
+  color: rgb(32 27 22 / 0.46);
   font-family: var(--latin-editorial);
-  font-size: 13px;
+  font-size: 10px;
   font-weight: 500;
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.1em;
   line-height: 1;
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(6px);
+  transform: translateX(-50%);
+}
+
+.tool-tabletop__language,
+.product-language {
+  z-index: 50;
+}
+
+.tool-tabletop__language {
+  position: absolute;
+  top: 22px;
+  right: 24px;
+}
+
+.product-language {
+  position: fixed;
+  top: 20px;
+  right: max(18px, calc(50% - var(--shell-width) / 2 + 18px));
+}
+
+.tool-tabletop__language summary,
+.product-language summary {
+  justify-content: center;
+  min-width: 54px;
+  min-height: 34px;
+  padding-inline: 11px;
+  border-color: rgb(255 255 255 / 0.5);
+  background: rgb(246 240 232 / 0.76);
+  box-shadow: 0 5px 18px rgb(46 35 23 / 0.08);
+  cursor: pointer;
+  list-style: none;
+  backdrop-filter: blur(10px);
+}
+
+.tool-tabletop__language summary > span,
+.product-language summary > span {
+  font-family: var(--latin-editorial);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.tool-tabletop__language summary::-webkit-details-marker,
+.product-language summary::-webkit-details-marker {
+  display: none;
+}
+
+.language-pill:not([open]) .language-pill__menu {
+  display: none;
+}
+
+.tool-tabletop__language .language-pill__menu,
+.product-language .language-pill__menu {
+  overflow: hidden;
+  border-radius: 15px;
+  background: rgb(246 240 232 / 0.97);
+}
+
+.language-pill[open] summary svg:last-child {
+  transform: rotate(180deg);
 }
 
 .story-progress span:first-child {
-  color: #8e672e;
-  font-size: 17px;
+  color: rgb(72 52 31 / 0.64);
+  font-size: 11px;
+}
+
+.story-progress > span,
+.story-progress > i {
+  transform: translateY(1px);
 }
 
 .story-progress i {
@@ -2412,11 +2503,11 @@ a:focus-visible {
 
 .social-share__button {
   display: grid;
-  width: 36px;
-  height: 36px;
+  width: 42px;
+  height: 42px;
   place-items: center;
   border: 1px solid rgb(70 56 40 / 0.12);
-  border-radius: 10px;
+  border-radius: 12px;
   background: rgb(255 253 248 / 0.7);
   box-shadow: 0 5px 18px rgb(49 36 22 / 0.07);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
@@ -2429,14 +2520,14 @@ a:focus-visible {
 
 .social-share__button--x {
   border-color: #191919;
-  border-radius: 10px;
+  border-radius: 12px;
   background: #191919;
   color: #fff;
 }
 
 .social-share__button--instagram {
   border-color: transparent;
-  border-radius: 10px;
+  border-radius: 12px;
   background: radial-gradient(circle at 31% 105%, #feda75 0 18%, #fa7e1e 35%, #d62976 58%, #962fbf 78%, #4f5bd5 100%);
   color: #fff;
 }
@@ -2448,7 +2539,7 @@ a:focus-visible {
 
 .social-share__button--line {
   border-color: #06ad4d;
-  border-radius: 10px;
+  border-radius: 12px;
   background: #06ad4d;
   color: #fff;
 }

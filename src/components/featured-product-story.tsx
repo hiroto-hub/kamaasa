@@ -4,6 +4,7 @@ import {type FeaturedProductStory, type LocalizedCopy} from "@/data/featured-pro
 import {Reveal} from "./reveal";
 import {SocialShare} from "./social-share";
 import {StoryProgress} from "./story-progress";
+import {LanguagePill} from "./site-header";
 
 type ProductAssets = {
   hero: string;
@@ -122,6 +123,9 @@ export function FeaturedProductStoryView({locale, story}: {locale: string; story
         <span aria-hidden="true">←</span><span>{language === "ja" ? "商品一覧" : "TOOLS"}</span>
       </Link>
       <StoryProgress />
+      <div className="product-language">
+        <LanguagePill />
+      </div>
 
       <section className="product-editorial__scene product-editorial__hero">
         <Image src={assets.hero} alt="" fill priority sizes="(max-width: 639px) 100vw, 640px" className="object-cover object-center" />

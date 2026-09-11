@@ -27,7 +27,7 @@ export default async function LocaleLayout({
   return (
     <NextIntlClientProvider messages={messages}>
       <div
-        className={`mobile-shell ${isMinchoBodyLocale(locale) ? "mincho" : ""}`}
+        className={`mobile-shell locale-${locale} ${isMinchoBodyLocale(locale) ? "mincho" : ""}`}
       >
         {children}
       </div>

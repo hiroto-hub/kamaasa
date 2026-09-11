@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import {Link} from "@/i18n/navigation";
+import {LanguagePill} from "./site-header";
 
 type ProductHotspot = {
   id: string;
@@ -36,6 +37,10 @@ export function FeaturedProductsHome({locale}: {locale: string}) {
         <span aria-hidden="true">⌂</span>
         <strong>KAMA-ASA</strong>
         <small>JAPAN</small>
+      </div>
+
+      <div className="tool-tabletop__language">
+        <LanguagePill />
       </div>
 
       <div className="tool-tabletop__message">

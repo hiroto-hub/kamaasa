@@ -5,6 +5,7 @@ import {KnifeFinder} from "./knife-finder";
 import {Reveal} from "./reveal";
 import {SocialShare} from "./social-share";
 import {StoryProgress} from "./story-progress";
+import {LanguagePill} from "./site-header";
 
 type Language = "ja" | "en";
 
@@ -93,6 +94,9 @@ export function RichProductStory({locale}: {locale: string}) {
         <span aria-hidden="true">←</span><span>{text.back as string}</span>
       </Link>
       <StoryProgress />
+      <div className="product-language">
+        <LanguagePill />
+      </div>
 
       <section className="amane-scene amane-scene--hero">
         <Image src="/images/kamaasa/generated/v2/amane-daily.jpg" alt="" fill priority sizes="(max-width: 639px) 100vw, 640px" className="object-cover object-center" />
