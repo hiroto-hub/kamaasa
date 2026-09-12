@@ -150,7 +150,10 @@ export function FeaturedProductStoryView({locale, story}: {locale: string; story
             <h2 style={language === "ja" ? japaneseHeadingStyle(cleanHeading(page.title.ja), 32) : undefined}>{cleanHeading(page.title[language])}</h2>
             <span>{page.body[language]}</span>
           </Reveal>
-          <Reveal delay={170} className="product-editorial__video">
+          <Reveal
+            delay={170}
+            className={`product-editorial__video ${story.slug === "brass-handle-copper-egg-roll-pan" && index === 1 ? "product-editorial__video--portrait" : ""}`}
+          >
             <video
               src={`/videos/${page.videoId}.mp4`}
               aria-label={page.videoTitle?.[language] ?? page.title[language]}

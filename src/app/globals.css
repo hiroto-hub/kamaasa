@@ -2114,6 +2114,19 @@ a:focus-visible {
   background: #191816;
 }
 
+/* 玉子焼器の movie2 は縦動画。横長枠へ拡大せず、映像全体を見せる。 */
+.product-editorial__video--portrait {
+  width: auto;
+  max-width: calc(100% - 16px);
+  height: clamp(280px, 46svh, 390px);
+  aspect-ratio: 9 / 16;
+  margin-top: 24px;
+}
+
+.product-editorial__video--portrait video {
+  object-fit: contain;
+}
+
 .product-editorial__playing {
   position: absolute;
   bottom: 10px;
