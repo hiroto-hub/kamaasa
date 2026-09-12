@@ -2118,9 +2118,9 @@ a:focus-visible {
 .product-editorial__video--portrait {
   width: auto;
   max-width: calc(100% - 16px);
-  height: clamp(280px, 46svh, 390px);
+  height: clamp(320px, 52svh, 420px);
   aspect-ratio: 9 / 16;
-  margin-top: 24px;
+  margin-top: 20px;
 }
 
 .product-editorial__video--portrait video {
